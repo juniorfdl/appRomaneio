@@ -1,0 +1,23 @@
+<luar-list-search class="row" campos="listCtrl.columns" ng-if="listCtrl.config.search"></luar-list-search>
+<table class="table">
+    <thead>
+        <tr order-by-click="ctrl.ordenar(column)">
+            <th ng-repeat="col in listCtrl.columns track by col.id" order-by="{{col.sortBy || col.id}}">{{col.title}}</th>
+            <th class="hidden-print" ng-if="listCtrl.config.rowActions">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="umItem in ctrl.lista" ng-click="clicked(umItem, $event)" 
+            ng-class="{destaque: umItem.destaque}">
+
+            <td ng-repeat="col in listCtrl.columns track by col.id" data-title="{{col.title}}">
+                <div class="{{col.divClass}}">{{col.format(umItem)}}</div>
+            </td>
+            <td class="hidden-print" luar-action-bar data-title="Ações" ng-if="listCtrl.config.rowActions">
+                <luar-list-row-crud key="umItem[ctrl.chave()]" excluir="ctrl.excluir(umItem)"></luar-list-row-crud>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<pagination total-items="ctrl.lista.$totalCount" ng-model="ctrl.paginaAtual" items-per-page="ctrl.lista.$pageSize" 
+            class="pagination-sm hidden-print" boundary-links="true" max-size="5" rotate="false"></pagination>

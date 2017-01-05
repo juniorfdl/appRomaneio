@@ -1,0 +1,17 @@
+﻿<form class="form-inline toolbar col-xs-10" ng-submit="ctrl.submit()">
+    <select class="form-control desktop-only" ng-if="ctrl.campos" 
+            ng-options="item.id as item.title for item in ::ctrl.camposParaFiltro" ng-model="ctrl.listCtrl.campoSelecionado">
+    </select>
+    <div class="input-group">
+        <input type="text" class="form-control" ng-model="ctrl.listCtrl.termoDigitado" aria-label="Digite um termo para pesquisar nesta lista" placeholder="Pesquise..." />
+        <span class="input-group-btn">
+            <button type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-search"></span><span class="desktop-only"> Buscar</span>
+            </button>
+        </span>
+    </div>
+</form>
+<div class="col-xs-2">
+    <a class="btn btn-primary" ng-disabled="!ctrl.crudCtrl.podeIncluir" 
+       ng-click="ctrl.novo()"><span class="glyphicon glyphicon-plus"></span><span class="desktop-only"> Novo</span></a>
+</div>

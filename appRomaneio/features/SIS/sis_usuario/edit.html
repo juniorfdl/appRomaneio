@@ -1,0 +1,36 @@
+﻿<luar-crud crud="ctrl" title="Usuários">
+
+    <luar-list list="ctrl.lista" ng-show="!Cadastro">
+        <column id="id" title="Código" searchable="true"></column>
+        <column id="NOME" title="Nome" searchable="true"></column>
+        <luar-table></luar-table>
+    </luar-list>
+
+    <luar-main-form ng-show="Cadastro">
+
+        <fieldset>
+            <div class="row">
+                <luar-text container-class="col-md-2" label="Código" name="codigo" readonly ng-model="ctrl.currentRecord.id"></luar-text>
+            </div>
+
+            <div class="row">
+                <luar-text container-class="col-md-3" label="Nome" name="NOME" required ng-model="ctrl.currentRecord.NOME"></luar-text>
+                <luar-text container-class="col-md-3" label="Senha" name="PWD" required ng-model="ctrl.currentRecord.PWD" type="password"></luar-text>
+            </div>
+            <input luar-check label="Administrador" ng-false-value="'N'" ng-true-value="'S'" ng-model="ctrl.currentRecord.ADMIN" />
+
+            <div class="row">
+                <luar-select container-class="col-md-6" label="Vendedor" name="COD_CADVENDEDOR" required
+                             ng-options="item.id as item.FANTASIA for item in ::ctrl.VendedorLook"
+                             ng-model="ctrl.currentRecord.COD_CADVENDEDOR">
+                </luar-select>
+            </div>
+
+        </fieldset>
+
+    </luar-main-form>
+
+</luar-crud>
+
+
+

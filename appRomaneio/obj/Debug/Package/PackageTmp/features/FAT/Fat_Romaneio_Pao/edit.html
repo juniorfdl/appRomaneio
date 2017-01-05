@@ -1,0 +1,196 @@
+﻿<luar-crud crud="ctrl" title="Romaneio">
+
+    <luar-list list="ctrl.lista" ng-show="!Cadastro">
+        <column id="CODIGO" title="Código" searchable="true"></column>
+        <column id="CODIGO_CLIENTE" title="Cliente" searchable="true"></column>
+        <column id="NOME_CLIENTE" title="Nome Cliente" searchable="true"></column>
+        <column id="DATA_EMISSAO" title="Data Emissão" searchable="true" type="date"></column>
+        <column id="DATA_ENTREGA" title="Data Entrega" searchable="true" type="date"></column>
+        <column id="NUMERO_PEDIDO" title="Nro Pedido" searchable="true"></column>
+        <luar-table></luar-table>
+    </luar-list>
+
+    <luar-main-form ng-show="Cadastro">
+
+
+        <tabset>
+            <tab heading="Dados Gerais">
+                <tab-heading> Dados Gerais </tab-heading>
+                <fieldset>
+                    <div class="row">
+                        <luar-text container-class="col-md-2" label="Código" name="codigo" readonly ng-model="ctrl.currentRecord.CODIGO"></luar-text>
+                        <luar-text container-class="col-md-2" label="Data Emissão" name="DATA_EMISSAO" type="date" required ng-model="ctrl.currentRecord.DATA_EMISSAO" wt-iso-date></luar-text>
+                        <luar-text container-class="col-md-2" label="Data Entrega" name="DATA_ENTREGA" type="date" required ng-model="ctrl.currentRecord.DATA_ENTREGA" wt-iso-date></luar-text>
+                        
+                    </div>
+
+                    <div class="row">
+                        <luar-text container-class="col-md-12" label="Cliente"
+                                   name="CLIENTE_CODIGO" required style="display:none" ng-model="ctrl.currentRecord.CLIENTE_CODIGO">
+                        </luar-text>
+                        <div class="col-md-12 ng-scope" name="cliente">
+                            <md-autocomplete md-selected-item="ctrl.selectedItem"
+                                             md-search-text-change="ctrl.querySearch(ctrl.searchText)"
+                                             md-search-text="ctrl.searchText"
+                                             md-selected-item-change="ctrl.selectedItemChange(item)"
+                                             md-items="item in ctrl.data"
+                                             md-item-text="item.FANTASIA" md-min-length="2"
+                                             md-autoselect="true"
+                                             placeholder="Pesquisar Cliente">
+                                <md-item-template>
+                                    <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.FANTASIA}}</span>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <luar-select container-class="col-md-6" label="Condição de Pagamento" name="COD_CADCONDPAGAMENTO" required
+                                     ng-options="item.id as item.NOME for item in ::ctrl.CondPagamentoLook"
+                                     ng-model="ctrl.currentRecord.COD_CADCONDPAGAMENTO">
+                        </luar-select>
+
+                        <luar-text container-class="col-md-6" label="Vendedor" readonly required name="VENDEDOR"
+                                   ng-model="ctrl.currentRecord.VENDEDOR">
+                        </luar-text>
+                    </div>
+
+                    <div class="row">
+                        <luar-text container-class="col-md-3" label="Transportadora" name="COD_CADTRANSPORTADORA" required ng-model="ctrl.currentRecord.COD_CADTRANSPORTADORA"></luar-text>
+                        <luar-text container-class="col-md-3" label="Entregador" name="COD_CADENTREGADOR" required ng-model="ctrl.currentRecord.COD_CADENTREGADOR"></luar-text>
+                    </div>
+
+                    <div class="row">
+
+                        <select container-class="col-md-3" luar-select label="Tipo de Frete" name="TIPO_FRETE" required ng-model="ctrl.currentRecord.TIPO_FRETE">
+                            <option value="C">CIF</option>
+                            <option value="F">FOB</option>
+                            <option value="S">Sem Frete</option>
+                            <option value="T">Terceiros</option>
+                        </select>
+
+                        <luar-text container-class="col-md-3" label="Nro O.C. Cliente" name="CODIGO_OC_CLIENTE" required ng-model="ctrl.currentRecord.CODIGO_OC_CLIENTE" ></luar-text>
+                        <luar-text container-class="col-md-2" label="Pedido Cliente" name="COD_FATPEDIDO" readonly ng-model="ctrl.currentRecord.COD_FATPEDIDO" type="number"></luar-text>
+                    </div>
+
+                </fieldset>
+            </tab>
+            <tab heading="Produtos">
+                <tab-heading>
+                    Produtos
+                </tab-heading>
+
+                <button type="button" data-action="newRow" class="btn btn-primary btn-sm" ng-click="formitens.$setDirty(); ctrl.AddAlterItem(-1)"><b>+</b>Novo Item</button>
+                <table class="table" ng-form="formitens">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Item</th>
+                            <th class="text-left">Produto</th>
+                            <th class="text-left">Quantidade</th>
+                            <th class="text-left">Vlr Unitário</th>
+                            <th class="text-left">Qtde Troca</th>
+                            <th class="text-center hidden-print">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ctrl.currentRecord.Itens">
+                            <td>
+                                {{item.ITEM}}
+                            </td>
+                            <td>
+                                {{item.PRODUTO}}
+                            </td>
+                            <td>
+                                {{item.QUANTIDADE}}
+                            </td>
+                            <td>
+                                {{item.VALOR_UNITARIO | currency:'R$ ':2}}
+                            </td>
+                            <td>
+                                {{item.QUANTIDADE_TROCA}}
+                            </td>
+                            <td class="text-center hidden-print">
+                                <button data-action="editRow" class="btn btn-primary  btn-sm hidden-print" ng-click="formitens.$setDirty(); ctrl.AddAlterItem($index)"><span class="glyphicon glyphicon-edit"></span> </button>
+                                <button data-action="removeRow" class="btn btn-danger  btn-sm hidden-print" ng-click="formitens.$setDirty(); ctrl.removeItens($index,ctrl.SweetAlert)"><span class="glyphicon glyphicon-trash"></span> </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </tab>
+        </tabset>
+
+    </luar-main-form>
+
+</luar-crud>
+
+<script type="text/ng-template" id="Itens.html">
+    <form name="formItens">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Produto</h3>
+        </div>
+
+        <div class="modal-body" id="modal-body">
+
+            <fieldset>
+                <div class="row">
+                    <luar-text container-class="col-md-2" label="Item" name="ITEM" readonly ng-model="ItemSelecionado.ITEM"></luar-text>
+                </div>
+                <div class="row">
+                    <luar-select container-class="col-md-12" label="Operação de Saida" name="COD_FATOPERACAOSAIDA" required
+                                 ng-options="item.id as item.NOME for item in ::OperacaoSaidaLook"
+                                 ng-model="ItemSelecionado.COD_FATOPERACAOSAIDA">
+                    </luar-select>
+                </div>
+
+                <div class="row">
+                    <luar-text container-class="col-md-2" label="Produto" name="COD_CADPRODUTO" required style="display:none" ng-model="ItemSelecionado.COD_CADPRODUTO"></luar-text>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 ng-scope" name="produto">                        
+                        <md-autocomplete md-selected-item="selectedItemProduto"
+                                         md-search-text-change="querySearchProduto(searchTextProduto)"
+                                         md-search-text="searchTextProduto"
+                                         md-selected-item-change="selectedItemChangeProduto(item)"
+                                         md-items="item in dataProduto"
+                                         md-item-text="item.NOME" md-min-length="2"
+                                         md-autoselect="true"
+                                         placeholder="Pesquisar Produto">
+                            <md-item-template>
+                                <span md-highlight-text="searchTextProduto" md-highlight-flags="^i">{{item.NOME}}</span>
+                            </md-item-template>
+                        </md-autocomplete>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <luar-text container-class="col-md-6" label="Quantidade" name="QUANTIDADE" required ng-model="ItemSelecionado.QUANTIDADE" type="number" wt-number></luar-text>
+                </div>
+
+                <div class="row">
+                    <luar-text container-class="col-md-6" label="Valor Unitário" name="VALOR_UNITARIO" required ng-model="ItemSelecionado.VALOR_UNITARIO" type="number" wt-number></luar-text>
+                </div>
+
+                <div class="row">
+                    <luar-text container-class="col-md-6" label="Quantidade Troca" name="QUANTIDADE_TROCA" ng-model="ItemSelecionado.QUANTIDADE_TROCA" type="number" wt-number></luar-text>
+                </div>
+
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+
+            </fieldset>
+
+        </div>
+        <div class="modal-footer">
+            <span class="pull-right">
+                <button class="btn btn-sm btn-primary hidden-print" ng-disabled="formItens.$invalid" ng-click="ok()"><span class="glyphicon glyphicon-floppy-disk"></span> Salvar</button>
+                <button class="btn btn-sm btn-warning hidden-print" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+            </span>
+        </div>
+    </form>
+</script>
+
+

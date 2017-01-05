@@ -1,0 +1,46 @@
+.wt-spinner {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1100;
+    background-color: white;
+    opacity: .6;
+}
+
+.wt-spinner > span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -48px; /* -1 * image width / 2 */
+    margin-top: -48px; /* -1 * image height / 2 */
+    display: block;
+}
+
+.wt-spinner-animate {
+    animation: spin 1.5s infinite linear;
+    -webkit-animation: spin 1.5s infinite linear;
+    -moz-animation: spin 1.5s infinite linear;
+    font-size: 8em;
+}
+
+@-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}

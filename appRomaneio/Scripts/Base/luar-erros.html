@@ -1,0 +1,6 @@
+﻿<alert typeof="danger" ng-if="mensagens.haErros()">
+    <span class="listaErros">Erro{{mensagens.length > 1 ? "s" : ""}}: </span>
+    <ol>
+        <li ng-repeat="item in mensagens.todas">{{item.mensagem}}</li>
+    </ol>
+</alert>

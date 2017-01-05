@@ -1,0 +1,13 @@
+
+input.wt-numpad[type=number]::-webkit-inner-spin-button, 
+input.wt-numpad[type=number]::-webkit-outer-spin-button { 
+  margin: 0;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
+input.wt-numpad[type=number] {
+  -webkit-appearance: textfield;
+     -moz-appearance: textfield;
+}

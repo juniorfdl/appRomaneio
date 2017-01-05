@@ -1,0 +1,365 @@
+/* BASIC STYLINGS
+============================================================================= */
+
+.navbar {
+  margin-bottom: 5px;
+}
+
+#divlogin {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+    background: #bcc3ca;
+}
+
+html, body {
+    height: 100%;    
+}
+
+a {
+    cursor: pointer;
+}
+
+/* menu */
+.navbar .btn {
+    text-align: left;
+}
+
+/* layout */
+
+.toolbar {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 15px;
+}
+
+.checkbox1 {
+    margin-top: 0;
+    position:static!important;
+}
+.checkbox.align-label {
+    margin-top: 30px;
+}
+
+/* conteúdo */
+
+.two-lines-of-text {
+    max-height: 3em;
+    overflow: hidden;
+}
+
+.extra-info {
+    font-style: italic;
+    color: #777;
+    font-size: 85%;
+    line-height: 20px;
+}
+
+/* tabelas */
+
+@media only screen and (min-width: 801px) {
+    #ui-view td {
+        vertical-align: middle;
+    }
+
+        #ui-view td.text-center > div {
+            margin-left: auto;
+            margin-right: auto;
+        }
+}
+
+/* linhas clicáveis de tabelas */
+
+th[ng-click], th[order-by], tr[ng-click], tr[ui-sref], td[ng-click] {
+    cursor: pointer;
+}
+
+td[luar-action-bar] {
+    cursor: default;
+}
+
+/* animações */
+
+tr.ng-enter {
+    opacity: 0.2;
+    -moz-transition: all ease 250ms;
+    -o-transition: all ease 250ms;
+    -webkit-transition: all ease 250ms;
+    transition: all ease 250ms;
+}
+
+tr.ng-enter-stagger {
+    -moz-transition-delay: 0.05s;
+    -o-transition-delay: 0.05s;
+    -webkit-transition-delay: 0.05s;
+    transition-delay: 0.05s;
+    -moz-transition-duration: 0s;
+    -o-transition-duration: 0s;
+    -webkit-transition-duration: 0s;
+    transition-duration: 0s;
+}
+
+tr.ng-enter-active {
+    opacity: 1.0;
+}
+
+/* mensagens de erro */
+
+div[ng-messages] {
+    color: maroon;
+}
+
+.ng-submitted [ng-model].ng-invalid {
+    border: 1px solid red;
+}
+
+/* validação */
+
+.listaErros {
+    font-weight: bold;
+}
+
+tab-heading > .badge.error {
+    background-color: #CC0000;
+    margin-left: 6px;
+}
+
+div[required] .control-label::before {
+    content: '* '
+}
+
+/* ui-select */
+
+.ui-select-multiple .ui-select-search {
+    padding-left: 0.55em;
+}
+
+.ui-select-multiple.ui-select-bootstrap[disabled] {
+    height: 34px;
+}
+
+/* ui-select: detalhes */
+
+.ui-select-choices-row.active .extra-info {
+    color: white;
+}
+.ui-select-match .extra-info.pull-right {
+    padding-left: 1em;
+}
+.ui-select-match-text {
+    width: calc(100% - 34px);
+    height: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ui-select: adicionar item */
+
+.ui-select--has-link .ui-select-add > a {
+    border-bottom: 1px dashed blue;
+}
+
+.ui-select--has-link .ui-select-choices-row.active:last-child > a {
+    background-color: white;
+}
+
+.ui-select--has-link .ui-select-choices-row.active .ui-select-add > a:hover {
+    text-decoration: none;
+}
+
+/* tabset */
+
+/* https://github.com/angular-ui/bootstrap/issues/2558 */
+
+.tab-content {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+/* MODAL */
+
+.assistente .modal-body {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.modal-body {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+@media only screen and (max-device-width : 480px) {
+    .modal-body, .modal-content fieldset, .modal-content .container {
+        padding: 0 !important;
+    }
+}
+
+/* listas */
+
+.control--list2 {
+    padding-left: 0;
+}
+
+.control--list3 {
+    padding-left: 0;
+}
+
+    .control--list3 li, .control--list2 li {
+        list-style-type: none;
+    }
+
+        .control--list3 li.text, .control--list2 li.text {
+            display: inline-block;
+        }
+
+            .control--list3 li.text label, .control--list2 li.text label {
+                text-align: left;
+            }
+
+@media (min-width : 768px) {
+
+    .control--list2 {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+    }
+
+    .control--list3 {
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 3;
+    }
+
+}
+
+/* notificações */
+
+#toast-container {
+    z-index: 999 !important;
+}
+
+/* impressão */
+
+@media print {
+    a[href]:after {
+        content: "";
+    }
+
+    footer p:after {
+        content: "Acesse esta página no navegador: " url(https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=);
+        position: absolute;
+        right: 0;
+    }
+}
+
+/* desktop-only */
+
+@media only screen and (max-device-width : 960px) {
+    .desktop-only {
+        display: none;
+    }
+}
+
+/* resets bootstrap */
+
+.well {
+    padding: 11px;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .container {
+        width: 100%;
+    }
+}
+
+.input-group-addon {
+    width: auto;
+}
+
+.glyphicon.text-muted {
+    color: lightgray;
+}
+
+/* debug */
+
+/* document.body.classList.add('debug') */
+
+.debug1 .ng-scope {
+    border: 1px solid blue;
+}
+
+.debug1 .ng-isolate-scope {
+    border: 1px dashed blue;
+}
+
+.debug1 .ng-binding {
+    border: 1px solid green;
+}
+
+.debug2 .ng-invalid {
+    border: 1px solid red;
+}
+
+.debug2 div.ng-invalid {
+    border: 2px solid red;
+}
+
+.debug3 .ng-dirty {
+    border: 2px solid red;
+}
+
+
+
+// login
+
+.wrapper {    
+	margin-top: 80px;
+	margin-bottom: 20px;
+}
+
+.form-signin {
+  max-width: 420px;
+  padding: 30px 38px 66px;
+  margin: 0 auto;
+  background-color: #eee;
+  border: 3px dotted rgba(0,0,0,0.1);  
+  }
+
+.form-signin-heading {
+  text-align:center;
+  margin-bottom: 30px;
+}
+
+.form-control {
+  position: relative;
+  font-size: 16px;
+  /*height: auto;
+  padding: 10px;*/
+}
+
+input[type="text"] {
+  margin-bottom: 0px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+input[type="password"] {
+  margin-bottom: 20px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.colorgraph {
+  height: 7px;
+  border-top: 0;
+  background: #c4e17f;
+  border-radius: 5px;
+  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+}

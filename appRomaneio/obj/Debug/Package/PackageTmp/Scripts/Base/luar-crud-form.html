@@ -1,0 +1,18 @@
+<h2>{{::crudCtrl.title}} - {{crudCtrl.crud.descricao}}</h2>
+<hr />
+
+<form name="ctrl.mainForm" novalidate unsaved-warning-form wt-auto-focus>
+    <fieldset ng-disabled="!crudCtrl.podeSalvar">
+        <luar-edit-crud salvar="crudCtrl.crud.salvar()" cancelar="crudCtrl.crud.cancelar()" excluir="crudCtrl.crud.excluir()"></luar-edit-crud>
+        <hr class="hidden-print" />
+
+        <alert type="danger" ng-show="ctrl.mainForm.$invalid && ctrl.mainForm.$submitted">Preencha corretamente todos os campos solicitados.</alert>
+        <luar-erros mensagens="crudCtrl.crud.mensagens"></luar-erros>
+
+        <div ng-transclude></div>
+    </fieldset>
+</form>
+
+<div>
+    <a ng-click="crudCtrl.voltar()">Voltar para lista</a>
+</div>

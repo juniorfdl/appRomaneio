@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR" ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title ng-bind="title">@(PageData["title"] ?? "appRomaneio")</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <base href="/">
+
+    <!-- for Chrome on Android, multi-resolution icon of 196x196 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" sizes="196x196" href="app/icon-196.png">
+
+    @Styles.Render("~/css/app")
+</head>
+<body>
+    <!--[if lt IE 9]>
+        <p class="browsehappy">Você está usando uma versão <strong>obsoleta</strong> do Internet Explorer. Por favor <a href="http://browsehappy.com/">atualize seu navegador</a> para utilizar esta aplicação.</p>
+    <![endif]-->
+
+    <noscript>
+        <div class="well text-center">
+            Você está utilizando um navegador que não suporta a execução de scripts.
+        </div>
+    </noscript>
+
+    <div ng-include="'views/header1.html'"></div>
+
+    <toaster-container toaster-options="{'position-class': 'toast-top-full-width', 'time-out': 5000, mouseoverTimer: false, limit: 1}"></toaster-container>
+    <toaster-container toaster-options="{'toaster-id': 'notificacoes', 'position-class': 'toast-bottom-right', 'time-out': 0, mouseoverTimer: false}"></toaster-container>
+
+    <div class="wt-spinner" wt-full-page-spinner>
+        <span class="glyphicon glyphicon-refresh wt-spinner-animate"></span>
+    </div>
+
+    <div id="ui-view" class="container" ui-view autoscroll wt-auto-focus data-tmpl-url="@Request.RequestContext.RouteData.DataTokens["templateUrl"]">
+        @RenderBody()
+    </div>
+
+    <footer>
+        <hr />
+        <p>©luarApp</p>
+    </footer>
+
+    @Scripts.Render("~/js/angular")
+    @Scripts.Render("~/js/app")   
+</body>
+</html>
