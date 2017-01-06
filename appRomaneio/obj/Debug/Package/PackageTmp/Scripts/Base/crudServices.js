@@ -10,15 +10,26 @@ var App;
          * @abstract
          */
         var CrudBaseService = (function () {
-            
+
             /* @ngInject */
-            function CrudBaseService($q, api) {
+            function CrudBaseService($q, api, $rootScope) {
                 debugger;
                 this.$q = $q;
-                this.api = api(this.baseEntity); // ver aqui tb
+                this.api = api(this.baseEntity); 
                 this.cache = {};
+                this.$rootScope = $rootScope;
+
+                if (this.baseEntityConsulta != null && this.baseEntityConsulta != "") {
+                    this.apiConsulta = api(this.baseEntityConsulta);
+                }
             }
-            
+
+            Object.defineProperty(CrudBaseService.prototype, "baseEntityConsulta", {                
+                get: function () { return ""; },
+                enumerable: true,
+                configurable: true
+            });
+
             Object.defineProperty(CrudBaseService.prototype, "baseEntity", {
                 /**
                  * Retorna o nome da entidade deste serviço. Cada serviço deve implementar este método.
@@ -49,8 +60,9 @@ var App;
              * @returns                 Promise para a lista de registros.
              */
             CrudBaseService.prototype.buscar = function (termoDePesquisa, pagina, campoOrdenacao, direcaoAsc, itensPorPagina, campoPesquisa) {
-                var _this = this;
                 debugger;
+                var _this = this;
+
                 if (termoDePesquisa === void 0) { termoDePesquisa = ''; }
                 if (arguments.length === 0 && this.cache.result) {
                     return this.$q.when(this.cache.result);
@@ -58,13 +70,22 @@ var App;
                 var params = {
                     termo: termoDePesquisa,
                     pagina: pagina,
-                    itensPorPagina: itensPorPagina ? itensPorPagina : 15, //luarApp.ITENS_POR_PAGINA
-                    //continuar
+                    itensPorPagina: itensPorPagina ? itensPorPagina : 15, //luarApp.ITENS_POR_PAGINA                    
                     campoOrdenacao: campoOrdenacao,
                     direcaoAsc: direcaoAsc,
                     campoPesquisa: campoPesquisa
                 };
-                var results = this.api.all(params);
+
+                if (_this.$rootScope != null)
+                    params.Empresa = _this.$rootScope.currentUser.userCEMP;
+                else
+                    params.Empresa = "";
+                
+                if (this.apiConsulta != null)
+                    var results = this.apiConsulta.all(params);
+                else
+                    var results = this.api.all(params);
+
                 results.then(function (result) {
                     _this.cache.result = result;
                 });
@@ -98,6 +119,14 @@ var App;
             CrudBaseService.prototype.buscarPorId = function (id) {
                 debugger;
                 return this.api.get(id);
+            };
+
+            CrudBaseService.prototype.buscarConsultaPorId = function (id) {
+                debugger;    
+                if (this.apiConsulta != null)
+                    return this.apiConsulta.get(id);
+                else
+                    return this.api.get(id);
             };
             /**
              * Busca um registro no back-end através de seu [[ApiEntity.id]].

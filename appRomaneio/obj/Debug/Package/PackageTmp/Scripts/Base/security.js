@@ -12,6 +12,7 @@ var App;
         App.modules.Services.factory('security', function ($http, $window, $rootScope, $modal, api, luarApp) {
             var service = {
                 login: function (userName, password) {
+                    
                     cachedCredentials.userName = userName;
                     cachedCredentials.password = password;
 
@@ -19,15 +20,12 @@ var App;
 
                     return request.then(function (response) {
                         try {
-                            debugger;
                             localStorage.setItem("luarusr", userName);
                             localStorage.setItem("luarpass", password);
                             localStorage.setItem("ADMIN", response.ADMIN);
                             localStorage.setItem("VENDEDOR", response.VENDEDOR);
                             localStorage.setItem("COD_CADVENDEDOR", response.COD_CADVENDEDOR);
-
                             $rootScope.ADMIN = response.ADMIN == "S";
-
                         }
                         catch (e) {
                         }
@@ -40,17 +38,15 @@ var App;
 
                 },
                 logout: function () {
-                    //var request = api('Logout').invoke(null);
-                    //return request.then(function (response) {
+                   
+                    localStorage.clear();
                     cachedCredentials.userName = "";
                     cachedCredentials.password = "";
                     service.currentUser = null;
                     $rootScope.currentUser = service.currentUser;
-                    //$window.location.assign(luarApp.BASEURL + '/app/login');
                     $window.location.assign('login');
                     $rootScope.$emit("security:logout");
-                    return service.isAuthenticated();
-                    //});
+                    return service.isAuthenticated();                   
                 },
                 authorize: function () {
                     // authorizes the session by fetching
@@ -77,6 +73,12 @@ var App;
                         backdrop: 'static'
                     }).result;
                 },
+
+                empresas: function (id) {
+                    var request = api("sis_usuario").query("Empresa", { id: id });
+                    return request;                    
+                },
+
                 // Information about the current user
                 currentUser: null,
                 // Is the current user authenticated?
@@ -88,6 +90,7 @@ var App;
             $rootScope.alterarSenha = service.alterarSenha;
             return service;
         });
+
         App.modules.Services.config(function ($httpProvider) {
             $httpProvider.interceptors.push(function () {
                 return {
@@ -100,6 +103,7 @@ var App;
                 };
             });
         });
+
         var CrudSenhaPreviewController = (function () {
             function CrudSenhaPreviewController($modalInstance, $state, api, security, SweetAlert, $window) {
                 this.$modalInstance = $modalInstance;

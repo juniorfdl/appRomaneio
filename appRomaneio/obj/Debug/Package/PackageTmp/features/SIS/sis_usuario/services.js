@@ -17,7 +17,6 @@ var App;
             function CrudSis_UsuarioService($q, api) {
                 _super.apply(this, arguments);
 
-                debugger;
                 this.apiVendedor = api("CAD_VENDEDOR");
                 this.VendedorLook = VendedorLook;
             }
@@ -34,25 +33,7 @@ var App;
                 },
                 enumerable: true,
                 configurable: true
-            });
-
-            CrudSis_UsuarioService.prototype.buscar = function (termoDePesquisa, pagina, campoOrdenacao, direcaoAsc, itensPorPagina, campoPesquisa) {
-                var _this = this;
-                
-                if (termoDePesquisa === void 0) { termoDePesquisa = ''; }
-
-                var params = {
-                    Empresa: '',
-                    termo: termoDePesquisa,
-                    pagina: pagina,
-                    itensPorPagina: itensPorPagina ? itensPorPagina : 20,                    
-                    campoOrdenacao: campoOrdenacao,
-                    direcaoAsc: direcaoAsc,
-                    campoPesquisa: campoPesquisa
-                };                
-
-                return this.api.all(params);                
-            };
+            });            
    
             return CrudSis_UsuarioService;
         })(Services.CrudBaseService);

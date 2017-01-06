@@ -96,11 +96,17 @@ var App;
             var loginusr = localStorage.getItem("luarusr");
             var loginpass = localStorage.getItem("luarpass");
 
+            var logo = "app/Logo" + localStorage.getItem("userEmpresa") + ".jpg";
+            $rootScope.EmpresaSelecionadaLogo = logo;
+
             if (loginusr == null || loginpass == null) {
                 $location.path('/login');
             }
             else {
-                security.login(loginusr, loginpass);
+                security.login(loginusr, loginpass).then(function () {
+                    $rootScope.currentUser.userEmpresa = localStorage.getItem("userEmpresa");
+                    $rootScope.currentUser.userCEMP = localStorage.getItem("userCEMP");
+                });                
             }
         }
 
@@ -156,7 +162,7 @@ var App;
                 // Sets the layout name, which can be used to display different layouts (header, footer etc.)
                 // based on which page the user is located
                 $rootScope.layout = toState.layout;
-                var title = "luar";
+                var title = "Romaneio";
                 if (toState.data && toState.data.title) {
                     title += " | " + toState.data.title;
                 }

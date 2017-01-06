@@ -26,6 +26,7 @@ var App;
                 this.api = api;
                 this.CrudRomaneioService = CrudRomaneioService;
                 this.crudSvc = CrudRomaneioService;
+                this.AtualizarConsultaPorId = true;
                 CondPagamentoLook();
                 OperacaoSaidaLook();
 
@@ -116,41 +117,10 @@ var App;
                     });
                 }                
             }
-
-            CrudRomaneioCtrl.prototype.salvar = function () {
-
-                var _this = this;
-                this.mensagens.limpar();
-                this.mainForm.$setSubmitted();
-                var services = this.services;
-                if (services.every(function (svc) { return svc == null || svc.validar == null || svc.validar(_this) !== false; })) {
-                    if (!this.mainForm.$valid)
-                        return;
-
-                    this.currentRecord.CFIL = '01';
-                    this.currentRecord.CEMP = '01';
-
-                    var result = this.CrudRomaneioService.salvar(this.currentRecord);
-
-                    this.CrudRomaneioService.buscar('', 1, 'CODIGO', false, 15, '').then(function (lista) {
-                        debugger;
-                        _this._lista = lista;
-                    });
-
-                    //if (result) {
-                    //    result.then(function (result) {
-                    //        var index = _this._lista.indexOf(_this.currentRecord);
-                    //        if (index === -1) {
-                    //            _this._lista.push(_this.currentRecord);
-                    //        }
-                    //    });
-                    //}
-                }
-            };
-
-            CrudRomaneioCtrl.prototype.prepararParaSalvar = function () {
-                debugger;
-                var _this = this;
+            
+            CrudRomaneioCtrl.prototype.prepararParaSalvar = function () {                
+                this.currentRecord.CFIL = '01';
+                this.currentRecord.CEMP = this.$rootScope.currentUser.userCEMP;
             };
 
             CrudRomaneioCtrl.prototype.crud = function () {
@@ -167,7 +137,7 @@ var App;
                         this.currentRecord.COD_CADVENDEDOR = localStorage.getItem("COD_CADVENDEDOR");
                     }
                 }                
-            }
+            }            
 
             return CrudRomaneioCtrl;
         })(Controllers.CrudBaseEditCtrl);

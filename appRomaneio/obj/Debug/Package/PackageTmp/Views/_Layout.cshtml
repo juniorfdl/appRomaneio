@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title ng-bind="title">@(PageData["title"] ?? "appRomaneio")</title>
+    <title ng-bind="title">@(PageData["title"])</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <base href="/">
 
     <!-- for Chrome on Android, multi-resolution icon of 196x196 -->
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="shortcut icon" sizes="196x196" href="app/icon-196.png">
+    @*<link rel="shortcut icon" sizes="196x196" href="app/icon-196.png">*@
 
     @Styles.Render("~/css/app")
 </head>
@@ -39,7 +39,7 @@
 
     <footer>
         <hr />
-        <p>©luarApp</p>
+        <p>©luarApp - {{$root.currentUser.userEmpresa}}</p>
     </footer>
 
     @Scripts.Render("~/js/angular")

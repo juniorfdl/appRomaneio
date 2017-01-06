@@ -247,10 +247,14 @@
   <ItemGroup>
     <Content Include="app\apple-touch-icon-precomposed.png" />
     <Content Include="app\Logo.jpg" />
+    <Content Include="app\LogoCROISSANT 99.jpg" />
+    <Content Include="app\LogoCROISSANT.jpg" />
     <Content Include="app\style.css" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\angular-dashboard-framework.css" />
+    <Content Include="Content\angular-material.css" />
+    <Content Include="Content\angular-material.min.css" />
     <Content Include="Content\angular-responsive-tables.css" />
     <Content Include="Content\angular-smart-forms.css" />
     <Content Include="Content\angular-wt-apps.css" />
@@ -275,11 +279,16 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\Angular\angular-animate.js" />
     <Content Include="Scripts\Angular\angular-animate.min.js" />
+    <Content Include="Scripts\Angular\angular-aria.js" />
+    <Content Include="Scripts\Angular\angular-aria.min.js" />
     <Content Include="Scripts\Angular\angular-dashboard-framework.js" />
     <Content Include="Scripts\Angular\angular-easy-masks.js" />
     <Content Include="Scripts\Angular\angular-file-upload.min.js" />
     <Content Include="Scripts\Angular\angular-locale_pt-br.js" />
+    <Content Include="Scripts\Angular\angular-material.js" />
+    <Content Include="Scripts\Angular\angular-material.min.js" />
     <Content Include="Scripts\Angular\angular-messages.js" />
+    <Content Include="Scripts\Angular\angular-mocks.js" />
     <Content Include="Scripts\Angular\angular-responsive-tables.js" />
     <Content Include="Scripts\Angular\angular-smart-forms.js" />
     <Content Include="Scripts\Angular\angular-ui-router.js" />
@@ -294,10 +303,12 @@
     <Content Include="Scripts\Angular\select.js" />
     <Content Include="Scripts\Angular\select.min.js" />
     <Content Include="Scripts\Angular\Sortable.js" />
+    <Content Include="Scripts\Angular\svg-assets-cache.js" />
     <Content Include="Scripts\Angular\SweetAlert.js" />
     <Content Include="Scripts\Angular\sweetalert.min.js" />
     <Content Include="Scripts\Angular\toaster.js" />
     <Content Include="Scripts\Angular\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\Angular\ui-bootstrap-tpls.min.js" />
     <Content Include="Scripts\Angular\unsavedChanges.js" />
     <Content Include="Scripts\Base\amdefine.js" />
     <Content Include="Scripts\Base\api.js" />
@@ -380,7 +391,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-    <None Include="Properties\PublishProfiles\appRomaneio.pubxml" />
+    <None Include="Properties\PublishProfiles\Romaneio.pubxml" />
+    <Content Include="Scripts\Angular\angular-aria.min.js.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

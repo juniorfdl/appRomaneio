@@ -14,20 +14,17 @@ var App;
         var CrudRomaneioService = (function (_super) {
             __extends(CrudRomaneioService, _super);
 
-            function CrudRomaneioService($q, api) {
-                _super.apply(this, arguments);
-
-                this.apiview = api('VW_FAT_ROMANEIO_PAO');
+            function CrudRomaneioService($q, api, $rootScope) {
+                _super.apply(this, arguments);                
                 this.apiClientesLook = api('cad_colaborador/ClientesLook');
                 this.apiCondPagamento = api('Cad_Cond_Pagamento');
                 this.apiOperacaoSaida = api('Fat_Operacao_Saida');
                 this.apiProdutosLook = api('cad_produto/ProdutosLook');
 
-
                 this.ClientesLook = ClientesLook;
                 this.CondPagamentoLook = CondPagamentoLook;
                 this.OperacaoSaidaLook = OperacaoSaidaLook;
-                this.ProdutosLook = ProdutosLook;
+                this.ProdutosLook = ProdutosLook;                
             }
 
             Object.defineProperty(CrudRomaneioService.prototype, "baseEntity", {
@@ -39,25 +36,14 @@ var App;
                 configurable: true
             });
 
-            CrudRomaneioService.prototype.buscar = function (termoDePesquisa, pagina, campoOrdenacao, direcaoAsc, itensPorPagina, campoPesquisa) {
-                var _this = this;
-                debugger;
-                if (termoDePesquisa === void 0) { termoDePesquisa = ''; }
-
-                //if (campoOrdenacao == "CLIENTE_NOME") { campoOrdenacao = ""}
-
-                var params = {
-                    Empresa: '01',
-                    termo: termoDePesquisa,
-                    pagina: pagina,
-                    itensPorPagina: itensPorPagina ? itensPorPagina : 20, //luarApp.ITENS_POR_PAGINA                    
-                    campoOrdenacao: campoOrdenacao,
-                    direcaoAsc: direcaoAsc,
-                    campoPesquisa: campoPesquisa
-                };
-
-                return this.apiview.all(params);
-            };
+            Object.defineProperty(CrudRomaneioService.prototype, "baseEntityConsulta", {
+                /// @override
+                get: function () {
+                    return 'VW_FAT_ROMANEIO_PAO';
+                },
+                enumerable: true,
+                configurable: true
+            });            
 
             function ClientesLook(fantasia) {
                 return this.apiClientesLook.get(fantasia);

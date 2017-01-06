@@ -96,8 +96,10 @@ var App;
             var loginusr = localStorage.getItem("luarusr");
             var loginpass = localStorage.getItem("luarpass");
 
-            var logo = "app/Logo" + localStorage.getItem("userEmpresa") + ".jpg";
-            $rootScope.EmpresaSelecionadaLogo = logo;
+            if (localStorage.getItem("userEmpresa") != null) {
+                var logo = "app/Logo" + localStorage.getItem("userEmpresa") + ".jpg";
+                $rootScope.EmpresaSelecionadaLogo = logo;
+            }
 
             if (loginusr == null || loginpass == null) {
                 $location.path('/login');
@@ -106,7 +108,7 @@ var App;
                 security.login(loginusr, loginpass).then(function () {
                     $rootScope.currentUser.userEmpresa = localStorage.getItem("userEmpresa");
                     $rootScope.currentUser.userCEMP = localStorage.getItem("userCEMP");
-                });                
+                });
             }
         }
 
