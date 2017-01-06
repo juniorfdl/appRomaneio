@@ -19,6 +19,10 @@ var App;
                             localStorage.setItem("userEmpresa", _this.EmpresaSelecionada.FANTASIA);
                             $rootScope.currentUser.userEmpresa = _this.EmpresaSelecionada.FANTASIA;
                             $rootScope.currentUser.userCEMP = _this.EmpresaSelecionada.CEMP;
+
+                            var logo = "app/Logo" + $rootScope.currentUser.userEmpresa + ".jpg";
+                            $rootScope.EmpresaSelecionadaLogo = logo;
+
                             $location.path('/home');
                             toaster.clear();
                         }
