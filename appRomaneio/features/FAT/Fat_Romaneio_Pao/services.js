@@ -15,8 +15,8 @@ var App;
             __extends(CrudRomaneioService, _super);
 
             function CrudRomaneioService($q, api, $rootScope) {
-                _super.apply(this, arguments);                
-                this.apiClientesLook = api('cad_colaborador/ClientesLook');
+                _super.apply(this, arguments);
+                this.$rootScope = $rootScope;
                 this.apiCondPagamento = api('Cad_Cond_Pagamento');
                 this.apiOperacaoSaida = api('Fat_Operacao_Saida');
                 this.apiProdutosLook = api('cad_produto/ProdutosLook');
@@ -24,8 +24,18 @@ var App;
                 this.ClientesLook = ClientesLook;
                 this.CondPagamentoLook = CondPagamentoLook;
                 this.OperacaoSaidaLook = OperacaoSaidaLook;
-                this.ProdutosLook = ProdutosLook;                
-            }
+                this.ProdutosLook = ProdutosLook;
+                this.TransportadoraLook = TransportadoraLook;
+            }            
+
+            Object.defineProperty(CrudRomaneioService.prototype, "filtrosBase", {
+                /// @override
+                get: function () {
+                    return { FiltrosBaseCampos: { NOME: "COD_CADVENDEDOR", VALOR: this.$rootScope.currentUser.COD_CADVENDEDOR } };
+                },
+                enumerable: true,
+                configurable: true
+            });
 
             Object.defineProperty(CrudRomaneioService.prototype, "baseEntity", {
                 /// @override
@@ -45,8 +55,9 @@ var App;
                 configurable: true
             });            
 
-            function ClientesLook(fantasia) {
-                return this.apiClientesLook.get(fantasia);
+            function ClientesLook(fantasia) {                
+                var param = { FANTASIA: fantasia };
+                return this.api.allLook(param, 'cad_colaborador/ClientesLook');
             }
 
             function ProdutosLook(Nome) {
@@ -63,6 +74,11 @@ var App;
                 var params = { Empresa: '', campoOrdenacao: 'NOME', direcaoAsc: true };
 
                 return this.apiOperacaoSaida.all(params);
+            }
+
+            function TransportadoraLook() {
+                var params = { CEMP: this.$rootScope.currentUser.userCEMP, TCLI: 'T' };
+                return this.api.allLook(params, 'cad_colaborador/Tipo');
             }
    
             return CrudRomaneioService;

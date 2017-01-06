@@ -29,6 +29,8 @@ var App;
                 this.AtualizarConsultaPorId = true;
                 CondPagamentoLook();
                 OperacaoSaidaLook();
+                TransportadoraLook();
+                EntregadorLook();
 
                 this.$rootScope.Cadastro = false;
                 this.lista = lista;
@@ -75,6 +77,18 @@ var App;
                 function OperacaoSaidaLook() {
                     _this.crudSvc.OperacaoSaidaLook().then(function (lista) {
                         _this.OperacaoSaidaLook = lista;
+                    });
+                }               
+
+                function TransportadoraLook() {
+                    _this.crudSvc.TransportadoraLook().then(function (lista) {
+                        _this.TransportadoraLook = lista;
+                    });
+                }
+
+                function EntregadorLook() {
+                    _this.crudSvc.TransportadoraLook().then(function (lista) {
+                        _this.EntregadorLook = lista;
                     });
                 }
 

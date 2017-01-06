@@ -223,6 +223,7 @@
     <Compile Include="Infra\Base\Context.cs" />
     <Compile Include="Infra\Base\ControllerBase.cs" />
     <Compile Include="Infra\Base\CrudControllerBase.cs" />
+    <Compile Include="Infra\Base\FiltrosBase.cs" />
     <Compile Include="Infra\Base\FuncoesBanco.cs" />
     <Compile Include="Infra\Base\QueryableExtensions.cs" />
     <Compile Include="Infra\Base\ResultadoDaBusca.cs" />

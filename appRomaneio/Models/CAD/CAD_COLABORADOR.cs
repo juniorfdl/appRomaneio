@@ -20,5 +20,6 @@
         public string CODIGO { get; set; }
         [Required]
         public string TCLI { get; set; }
+        public string CEMP { get; set; }        
     }
 }

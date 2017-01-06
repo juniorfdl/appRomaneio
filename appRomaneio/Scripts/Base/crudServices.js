@@ -21,7 +21,7 @@ var App;
 
                 if (this.baseEntityConsulta != null && this.baseEntityConsulta != "") {
                     this.apiConsulta = api(this.baseEntityConsulta);
-                }
+                }                
             }
 
             Object.defineProperty(CrudBaseService.prototype, "baseEntityConsulta", {                
@@ -46,6 +46,24 @@ var App;
                 enumerable: true,
                 configurable: true
             });
+
+            Object.defineProperty(CrudBaseService.prototype, "filtrosBase", {
+                /**
+                 * Retorna o nome da entidade deste serviço. Cada serviço deve implementar este método.
+                 *
+                 * ~~~
+                 * get baseEntity() {
+                 *     return 'TipoImovel';
+                 * }
+                 * ~~~
+                 *
+                 * @abstract
+                 */
+                get: function () { return null; },
+                enumerable: true,
+                configurable: true
+            });
+
             /**
              * Efetua uma pesquisa de registros.
              *
@@ -67,19 +85,21 @@ var App;
                 if (arguments.length === 0 && this.cache.result) {
                     return this.$q.when(this.cache.result);
                 }
+
                 var params = {
                     termo: termoDePesquisa,
                     pagina: pagina,
                     itensPorPagina: itensPorPagina ? itensPorPagina : 15, //luarApp.ITENS_POR_PAGINA                    
                     campoOrdenacao: campoOrdenacao,
                     direcaoAsc: direcaoAsc,
-                    campoPesquisa: campoPesquisa
+                    campoPesquisa: campoPesquisa,
+                    filtrosBase: this.filtrosBase
                 };
 
                 if (_this.$rootScope != null)
                     params.Empresa = _this.$rootScope.currentUser.userCEMP;
                 else
-                    params.Empresa = "";
+                    params.Empresa = "";                
                 
                 if (this.apiConsulta != null)
                     var results = this.apiConsulta.all(params);
@@ -110,6 +130,12 @@ var App;
                     direcaoAsc: direcaoAsc
                 });
             };
+
+            CrudBaseService.prototype.lookupapi = function (params, look) {               
+                return this.api.all(params, look);
+            };
+
+
             /**
              * Busca um registro no back-end através de seu [[ApiEntity.id]].
              *

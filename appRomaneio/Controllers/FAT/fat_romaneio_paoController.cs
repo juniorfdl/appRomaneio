@@ -90,7 +90,6 @@ namespace ConsoleApplicationEntity.Controllers.FAT
 
         protected override void BeforeSaveChanges(FAT_ROMANEIO_PAO item)
         {
-
             var itens = db.Set<FAT_ROMANEIO_PAO_ITEM>()
                .Where(i => i.COD_FATROMANEIOPAO == item.id);
 

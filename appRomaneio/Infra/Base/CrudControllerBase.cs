@@ -111,7 +111,7 @@
 
         // GET: api/T
         [HttpGet]
-        public ResultadoDaBusca<TProjecao> Get(string empresa, string termo = null, string campoOrdenacao = null, bool direcaoAsc = true, int pagina = 1, int itensPorPagina = 0, string campoPesquisa = "")
+        public ResultadoDaBusca<TProjecao> Get(string empresa, string termo = null, string campoOrdenacao = null, bool direcaoAsc = true, int pagina = 1, int itensPorPagina = 0, string campoPesquisa = "", [FromUri]FiltrosBase filtrosBase = null)
         {
             var queryOriginal = db.Set<T>().AsQueryable().Select(this.Selecionar());
 
