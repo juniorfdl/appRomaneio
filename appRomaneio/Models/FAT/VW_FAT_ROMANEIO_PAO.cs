@@ -29,7 +29,9 @@
         [Required]
         public String NOME_CLIENTE { get; set; }
         [Required]
-        public int CODIGO_CLIENTE { get; set; }    
+        public int CODIGO_CLIENTE { get; set; }
+        
+        public String COD_CADVENDEDOR { get; set; }        
     }
 
 }

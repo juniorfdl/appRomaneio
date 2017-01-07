@@ -92,14 +92,25 @@ var App;
                     itensPorPagina: itensPorPagina ? itensPorPagina : 15, //luarApp.ITENS_POR_PAGINA                    
                     campoOrdenacao: campoOrdenacao,
                     direcaoAsc: direcaoAsc,
-                    campoPesquisa: campoPesquisa,
-                    filtrosBase: this.filtrosBase
                 };
 
                 if (_this.$rootScope != null)
                     params.Empresa = _this.$rootScope.currentUser.userCEMP;
                 else
-                    params.Empresa = "";                
+                    params.Empresa = "";
+
+                var filtrosBase = this.filtrosBase;
+                if (filtrosBase != null) {
+                    var filtrosBaseNome = [];
+                    var filtrosBaseValor = [];
+                    for (var i = 0; i < filtrosBase.length; i++) {
+                        filtrosBaseNome.push(filtrosBase[i].NOME);
+                        filtrosBaseValor.push(filtrosBase[i].VALOR);
+                    }
+
+                    params.filtrosBaseNome = filtrosBaseNome;
+                    params.filtrosBaseValor = filtrosBaseValor;
+                }
                 
                 if (this.apiConsulta != null)
                     var results = this.apiConsulta.all(params);

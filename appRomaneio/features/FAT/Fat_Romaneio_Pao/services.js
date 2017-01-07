@@ -27,11 +27,20 @@ var App;
                 this.ProdutosLook = ProdutosLook;
                 this.TransportadoraLook = TransportadoraLook;
             }            
-
+            
             Object.defineProperty(CrudRomaneioService.prototype, "filtrosBase", {
                 /// @override
                 get: function () {
-                    return { FiltrosBaseCampos: { NOME: "COD_CADVENDEDOR", VALOR: this.$rootScope.currentUser.COD_CADVENDEDOR } };
+                    
+                    try {
+                        if (this.$rootScope.currentUser.ADMIN == "S")
+                            return null;
+                        else
+                            return [{ NOME: "COD_CADVENDEDOR", VALOR: this.$rootScope.currentUser.COD_CADVENDEDOR }];
+                    }
+                    catch (err) {
+                        return null;
+                    }
                 },
                 enumerable: true,
                 configurable: true
@@ -53,7 +62,7 @@ var App;
                 },
                 enumerable: true,
                 configurable: true
-            });            
+            });
 
             function ClientesLook(fantasia) {                
                 var param = { FANTASIA: fantasia };
@@ -80,8 +89,7 @@ var App;
                 var params = { CEMP: this.$rootScope.currentUser.userCEMP, TCLI: 'T' };
                 return this.api.allLook(params, 'cad_colaborador/Tipo');
             }
-   
-            return CrudRomaneioService;
+           return CrudRomaneioService;
         })(Services.CrudBaseService);
         Services.CrudRomaneioService = CrudRomaneioService;
         App.modules.Services
