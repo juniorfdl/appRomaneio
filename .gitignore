@@ -6,3 +6,7 @@ obj
 appRomaneio/bin/appRomaneio.pdb
 *.dll
 appRomaneio/obj/Debug/appRomaneio.pdb
+*.dll
+appRomaneio/obj/Debug/appRomaneio.pdb
+*.cache
+*.suo
