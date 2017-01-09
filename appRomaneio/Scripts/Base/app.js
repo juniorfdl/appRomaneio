@@ -37,21 +37,22 @@ var App;
                     return CrudSis_UsuarioService.buscar('', 1, 'NOME', false, 15, '');
                 }
             }
-        }).state("otherwise",
+        }).state('produto_fatopesaida', {
+            url: '',
+            templateUrl: 'features/CAD/Cad_Produto_FatOpeSaida/edit.html',
+            controller: 'CrudCad_Produto_FatOpeSaidaCtrl',
+            controllerAs: 'ctrl',
+            resolve: {
+                lista: function (CrudCad_Produto_FatOpeSaidaService) {
+                    return CrudCad_Produto_FatOpeSaidaService.buscar('', 1, 'PRODUTO', false, 15, '');
+                }
+            }
+        }
+        ).state("otherwise",
           {
               url: '/home',
               templateUrl: 'views/index.html'
-          }
-        //).state('formacontato', {
-        //    url: '',
-        //    templateUrl: 'features/Teste/list.html',
-        //    controller: 'CrudOfertaCtrl',
-        //    controllerAs: 'ctrl',
-        //    resolve: {
-        //        lista: function (CrudFormaContatoService) {
-        //            return CrudFormaContatoService.buscar();
-        //        }
-        //    }}
+          }        
         );
 
     });

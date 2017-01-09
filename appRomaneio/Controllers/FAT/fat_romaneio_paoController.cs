@@ -1,6 +1,4 @@
-﻿
-
-namespace ConsoleApplicationEntity.Controllers.FAT
+﻿namespace Controllers.FAT
 {
     using Infra.Base.Interface.Base;
     using Models.FAT;
@@ -19,6 +17,17 @@ namespace ConsoleApplicationEntity.Controllers.FAT
 
     public class fat_romaneio_paoController : CrudControllerBase<FAT_ROMANEIO_PAO>
     {
+        private int GetOperacao(int COD_CADPRODUTO)
+        {
+            var query = db.CAD_PRODUTO_FATOPESAIDA.Where(q => q.id == COD_CADPRODUTO)
+                .FirstOrDefault();
+
+            if (query == null)
+            { throw new InvalidOperationException("Produto não possui operação"); }
+
+            return query.COD_FATOPERACAOSAIDA;
+        }
+
         protected override IOrderedQueryable<FAT_ROMANEIO_PAO> Ordenar(IQueryable<FAT_ROMANEIO_PAO> query)
         {
             return query.OrderBy(e => e.id);
@@ -26,7 +35,7 @@ namespace ConsoleApplicationEntity.Controllers.FAT
 
         protected override void ExecutarAntesPost(FAT_ROMANEIO_PAO item)
         {
-            item.CODIGO = db.Set<FAT_ROMANEIO_PAO>().Max(m => m.CODIGO) + 1;            
+            item.CODIGO = db.Set<FAT_ROMANEIO_PAO>().Max(m => m.CODIGO) + 1;
         }
 
         protected override IQueryable<FAT_ROMANEIO_PAO> TrazerDadosParaLista(IQueryable<FAT_ROMANEIO_PAO> query)
@@ -69,7 +78,7 @@ namespace ConsoleApplicationEntity.Controllers.FAT
             var Query =
                 from i in itens
                 join p in produtos on i.COD_CADPRODUTO equals p.id
-                orderby i.ITEM                
+                orderby i.ITEM
                 select new
                 {
                     id = i.id,
@@ -81,10 +90,10 @@ namespace ConsoleApplicationEntity.Controllers.FAT
                     QUANTIDADE = i.QUANTIDADE,
                     VALOR_UNITARIO = i.VALOR_UNITARIO,
                     QUANTIDADE_TROCA = i.QUANTIDADE_TROCA,
-                    PRODUTO = p.NOME                       
+                    PRODUTO = p.NOME
                 };
-                       
-            
+
+
             item.Itens = Query;
         }
 
@@ -98,8 +107,6 @@ namespace ConsoleApplicationEntity.Controllers.FAT
                 db.Set<FAT_ROMANEIO_PAO_ITEM>().Remove(i);
             }
 
-            //dynamic jsonTratado = (item.Itens);
-
             if (item.Itens != null)
             {
                 for (int i = 0; i < item.Itens.Count; i++)
@@ -110,23 +117,40 @@ namespace ConsoleApplicationEntity.Controllers.FAT
                     {
                         var fb = new FuncoesBanco(new Context());
                         novo.id = fb.BuscarPKRegistro("FAT_ROMANEIO_PAO_ITEM");
-                    }                        
+                    }
                     else
                         novo.id = item.Itens[i].id;
 
                     novo.COD_FATROMANEIOPAO = item.id;
                     novo.COD_CADPRODUTO = item.Itens[i].COD_CADPRODUTO;
                     novo.COD_CADUNIDADE = item.Itens[i].COD_CADUNIDADE;
-                    novo.COD_FATOPERACAOSAIDA = item.Itens[i].COD_FATOPERACAOSAIDA;
+
+                    if (item.Itens[i].COD_FATOPERACAOSAIDA == null)
+                        novo.COD_FATOPERACAOSAIDA = this.GetOperacao((int)item.Itens[i].COD_CADPRODUTO);
+                    else
+                        novo.COD_FATOPERACAOSAIDA = item.Itens[i].COD_FATOPERACAOSAIDA;
+
                     novo.ITEM = item.Itens[i].ITEM;
                     novo.PRODUTO = item.Itens[i].PRODUTO;
                     novo.QUANTIDADE = item.Itens[i].QUANTIDADE;
                     novo.QUANTIDADE_TROCA = item.Itens[i].QUANTIDADE_TROCA;
-                    novo.VALOR_UNITARIO = item.Itens[i].VALOR_UNITARIO;   
+                    novo.VALOR_UNITARIO = item.Itens[i].VALOR_UNITARIO;
                     db.Set<FAT_ROMANEIO_PAO_ITEM>().Add(novo);
                 }
             }
 
+        }
+
+        [Route("api/fat_romaneio_pao/ProdutosLook")]
+        [HttpGet]
+        public dynamic ProdutosLook([FromUri]CAD_PRODUTO filtros)
+        {
+            var cli = from m in db.Set<CAD_PRODUTO>()
+                      join op in db.Set<CAD_PRODUTO_FATOPESAIDA>() on m.id equals op.id
+                      orderby m.NOME
+                      where m.NOME.StartsWith(filtros.NOME.ToUpper())
+                      select m;
+            return cli;
         }
 
     }

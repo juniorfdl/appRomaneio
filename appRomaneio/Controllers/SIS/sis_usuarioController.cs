@@ -1,4 +1,4 @@
-﻿namespace ConsoleApplicationEntity.Controllers.Sistema
+﻿namespace Controllers.Sistema
 {
     using Infra.Base.Interface.Base;
     using Models.Cadastros;
@@ -31,6 +31,23 @@
 
                 item.VENDEDOR = ven.FANTASIA;
             }
+
+            var itens = db.Set<SIS_USUARIO_EMPRESA>().Where(b => b.CODIGOSISUSUARIO == item.id);
+            var empresa = db.Set<CAD_EMPRESA>();
+
+            var Query =
+                from i in itens
+                join p in empresa on i.CODIGOEMPRESA equals p.id
+                orderby p.FANTASIA
+                select new
+                {
+                    CODIGOSISUSUARIO = i.CODIGOSISUSUARIO,
+                    CODIGOEMPRESA = i.CODIGOEMPRESA,
+                    FANTASIA = p.FANTASIA,
+                    CEMP = p.CEMP                                        
+                };
+
+            item.Empresas = Query;
         }
 
         [Route("api/sis_usuario/localizar")]
@@ -80,6 +97,30 @@
                 };
 
             return Query;
+        }
+
+
+        protected override void BeforeSaveChanges(SIS_USUARIO item)
+        {
+            var itens = db.Set<SIS_USUARIO_EMPRESA>()
+               .Where(i => i.CODIGOSISUSUARIO == item.id);
+
+            foreach (SIS_USUARIO_EMPRESA i in itens)
+            {
+                db.Set<SIS_USUARIO_EMPRESA>().Remove(i);
+            }
+
+            if (item.Empresas != null)
+            {
+                for (int i = 0; i < item.Empresas.Count; i++)
+                {
+                    SIS_USUARIO_EMPRESA novo = new SIS_USUARIO_EMPRESA();
+                    novo.CODIGOSISUSUARIO = item.id;
+                    novo.CODIGOEMPRESA = item.Empresas[i].CODIGOEMPRESA;                                      
+                    db.Set<SIS_USUARIO_EMPRESA>().Add(novo);
+                }
+            }
+
         }
 
     }

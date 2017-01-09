@@ -42,6 +42,8 @@ namespace Infra.Base
         public virtual DbSet<CAD_PRODUTO> CAD_PRODUTO { get; set; }
         public virtual DbSet<CAD_VENDEDOR> CAD_VENDEDOR { get; set; }
         public virtual DbSet<CAD_EMPRESA> CAD_EMPRESA { get; set; }
+        public virtual DbSet<CAD_PRODUTO_FATOPESAIDA> CAD_PRODUTO_FATOPESAIDA { get; set; }
+        public virtual DbSet<V_CAD_PRODUTO_FATOPESAIDA> V_CAD_PRODUTO_FATOPESAIDA { get; set; }
         #endregion
 
         #region Entidades tipo FAT

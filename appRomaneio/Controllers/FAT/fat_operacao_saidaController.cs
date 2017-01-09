@@ -1,5 +1,5 @@
 ﻿
-namespace ConsoleApplicationEntity.Controllers.FAT
+namespace Controllers.FAT
 {
     using Infra.Base.Interface.Base;
     using Models.FAT;

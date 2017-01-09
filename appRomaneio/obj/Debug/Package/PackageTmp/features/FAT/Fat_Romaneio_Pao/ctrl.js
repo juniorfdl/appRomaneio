@@ -26,9 +26,11 @@ var App;
                 this.api = api;
                 this.CrudRomaneioService = CrudRomaneioService;
                 this.crudSvc = CrudRomaneioService;
-                this.AtualizarConsultaPorId = true;
+                this.AtualizarConsultaPorId = true; //Apos conformar um registro ele atualiza a consulta executendo uma pesquisa
                 CondPagamentoLook();
                 OperacaoSaidaLook();
+                TransportadoraLook();
+                EntregadorLook();
 
                 this.$rootScope.Cadastro = false;
                 this.lista = lista;
@@ -75,6 +77,18 @@ var App;
                 function OperacaoSaidaLook() {
                     _this.crudSvc.OperacaoSaidaLook().then(function (lista) {
                         _this.OperacaoSaidaLook = lista;
+                    });
+                }               
+
+                function TransportadoraLook() {
+                    _this.crudSvc.TransportadoraLook().then(function (lista) {
+                        _this.TransportadoraLook = lista;
+                    });
+                }
+
+                function EntregadorLook() {
+                    _this.crudSvc.TransportadoraLook().then(function (lista) {
+                        _this.EntregadorLook = lista;
                     });
                 }
 

@@ -15,17 +15,35 @@ var App;
             __extends(CrudRomaneioService, _super);
 
             function CrudRomaneioService($q, api, $rootScope) {
-                _super.apply(this, arguments);                
-                this.apiClientesLook = api('cad_colaborador/ClientesLook');
+                _super.apply(this, arguments);
+                this.$rootScope = $rootScope;
                 this.apiCondPagamento = api('Cad_Cond_Pagamento');
                 this.apiOperacaoSaida = api('Fat_Operacao_Saida');
-                this.apiProdutosLook = api('cad_produto/ProdutosLook');
 
                 this.ClientesLook = ClientesLook;
                 this.CondPagamentoLook = CondPagamentoLook;
                 this.OperacaoSaidaLook = OperacaoSaidaLook;
-                this.ProdutosLook = ProdutosLook;                
-            }
+                this.ProdutosLook = ProdutosLook;
+                this.TransportadoraLook = TransportadoraLook;
+            }            
+            
+            Object.defineProperty(CrudRomaneioService.prototype, "filtrosBase", {
+                /// @override
+                get: function () {
+                    
+                    try {
+                        if (this.$rootScope.currentUser.ADMIN == "S")
+                            return null;
+                        else
+                            return [{ NOME: "COD_CADVENDEDOR", VALOR: this.$rootScope.currentUser.COD_CADVENDEDOR }];
+                    }
+                    catch (err) {
+                        return null;
+                    }
+                },
+                enumerable: true,
+                configurable: true
+            });
 
             Object.defineProperty(CrudRomaneioService.prototype, "baseEntity", {
                 /// @override
@@ -43,14 +61,16 @@ var App;
                 },
                 enumerable: true,
                 configurable: true
-            });            
+            });
 
-            function ClientesLook(fantasia) {
-                return this.apiClientesLook.get(fantasia);
+            function ClientesLook(fantasia) {                
+                var param = { FANTASIA: fantasia };
+                return this.api.allLook(param, 'cad_colaborador/ClientesLook');
             }
 
             function ProdutosLook(Nome) {
-                return this.apiProdutosLook.get(Nome);
+                var param = { NOME: Nome };
+                return this.api.allLook(param, 'fat_romaneio_pao/ProdutosLook');
             }
 
             function CondPagamentoLook() {
@@ -64,8 +84,12 @@ var App;
 
                 return this.apiOperacaoSaida.all(params);
             }
-   
-            return CrudRomaneioService;
+
+            function TransportadoraLook() {
+                var params = { CEMP: this.$rootScope.currentUser.userCEMP, TCLI: 'T' };
+                return this.api.allLook(params, 'cad_colaborador/Tipo');
+            }
+           return CrudRomaneioService;
         })(Services.CrudBaseService);
         Services.CrudRomaneioService = CrudRomaneioService;
         App.modules.Services

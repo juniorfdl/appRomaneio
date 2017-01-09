@@ -58,13 +58,16 @@ var App;
              * @private
              */
             function ApiService(api, $http, $q, TratarErroDaApi, intercept, toaster) {
-                debugger;
+                
                 this.api = api;
                 this.$http = $http;
                 this.$q = $q;
                 this.TratarErroDaApi = TratarErroDaApi;
                 this.intercept = intercept;
                 this.toaster = toaster;
+
+                var posicao = this.api.toLowerCase().indexOf("/api") + 4;
+                this.apibase = this.api.substr(0, posicao);
             }
             ApiService.prototype.fetch = function (url, params) {
                 return this.$http.get(url, params ? { params: params } : null).then(function (response) {
@@ -92,6 +95,11 @@ var App;
              */
             ApiService.prototype.all = function (params) {
                 return this.fetch(this.api, params);
+            };
+
+            ApiService.prototype.allLook = function (params, look) {
+                debugger;
+                return this.fetch(this.apibase +'/'+ look, params);
             };
             /**
              * Obtem um registro através do seu identificador.
@@ -183,9 +191,10 @@ var App;
                         _this.toaster.error("Atenção", response.data.mensagem_erro);
                     } else {
                         _this.toaster.success("Atenção", "Operação executada com sucesso!");
-                    }
 
-                    return angular.extend(entity, payload);
+                      return angular.extend(entity, payload);
+                    }
+                    
                 }).catch(function (data) {
                     return _this.$q.reject(_this.TratarErroDaApi(data));
                 });

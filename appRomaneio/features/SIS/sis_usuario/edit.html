@@ -7,30 +7,103 @@
     </luar-list>
 
     <luar-main-form ng-show="Cadastro">
+        <tabset>
+            <tab heading="Dados Gerais">
+                <tab-heading> Dados Gerais </tab-heading>
+                <fieldset>
+                    <div class="row">
+                        <luar-text container-class="col-md-2" label="Código" name="codigo" readonly ng-model="ctrl.currentRecord.id"></luar-text>
+                    </div>
 
-        <fieldset>
-            <div class="row">
-                <luar-text container-class="col-md-2" label="Código" name="codigo" readonly ng-model="ctrl.currentRecord.id"></luar-text>
-            </div>
+                    <div class="row">
+                        <luar-text container-class="col-md-3" label="Nome" name="NOME" required ng-model="ctrl.currentRecord.NOME"></luar-text>
+                        <luar-text container-class="col-md-3" label="Senha" name="PWD" required ng-model="ctrl.currentRecord.PWD" type="password"></luar-text>
+                    </div>
+                    <input luar-check label="Administrador" ng-false-value="'N'" ng-true-value="'S'" ng-model="ctrl.currentRecord.ADMIN" />
 
-            <div class="row">
-                <luar-text container-class="col-md-3" label="Nome" name="NOME" required ng-model="ctrl.currentRecord.NOME"></luar-text>
-                <luar-text container-class="col-md-3" label="Senha" name="PWD" required ng-model="ctrl.currentRecord.PWD" type="password"></luar-text>
-            </div>
-            <input luar-check label="Administrador" ng-false-value="'N'" ng-true-value="'S'" ng-model="ctrl.currentRecord.ADMIN" />
+                    <div class="row">
+                        <luar-select container-class="col-md-6" label="Vendedor" name="COD_CADVENDEDOR" required
+                                     ng-options="item.id as item.FANTASIA for item in ::ctrl.VendedorLook"
+                                     ng-model="ctrl.currentRecord.COD_CADVENDEDOR">
+                        </luar-select>
+                    </div>
 
-            <div class="row">
-                <luar-select container-class="col-md-6" label="Vendedor" name="COD_CADVENDEDOR" required
-                             ng-options="item.id as item.FANTASIA for item in ::ctrl.VendedorLook"
-                             ng-model="ctrl.currentRecord.COD_CADVENDEDOR">
-                </luar-select>
-            </div>
 
-        </fieldset>
+
+                </fieldset>
+            </tab>
+            <tab heading="Empresas">
+                <tab-heading>
+                    Empresas
+                </tab-heading>
+
+                <button type="button" data-action="newRow" class="btn btn-primary btn-sm" 
+                        ng-click="formitens.$setDirty(); ctrl.AddAlterItem()"><b>+</b>Novo Item</button>
+
+                <table class="table" ng-form="formitens">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Código</th>
+                            <th class="text-left">Fantasia</th>
+                            <th class="text-left">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in ctrl.currentRecord.Empresas">
+                            <td>
+                                {{item.CEMP}}
+                            </td>
+                            <td>
+                                {{item.FANTASIA}}
+                            </td>                            
+                            <td>
+                                <button data-action="removeRow" class="btn btn-danger  btn-sm hidden-print" ng-click="formitens.$setDirty(); ctrl.removeItens($index,ctrl.SweetAlert)"><span class="glyphicon glyphicon-trash"></span> </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </tab>
+        </tabset>
 
     </luar-main-form>
 
 </luar-crud>
+
+<script type="text/ng-template" id="Itens.html">
+    <form name="formItens">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Selecione uma Empresa</h3>
+        </div>
+
+        <div class="modal-body" id="modal-body">
+
+            <fieldset>
+                
+                <div class="row">
+                    <luar-select container-class="col-md-12" label="Empresa" name="CODIGOEMPRESA" required
+                                 ng-options="item as item.FANTASIA for item in ::EmpresaLook"
+                                 ng-model="NovoItem" track by item.CODIGOEMPRESA>
+                    </luar-select>
+                </div>  
+                
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+
+            </fieldset>
+
+        </div>
+        <div class="modal-footer">
+            <span class="pull-right">
+                <button class="btn btn-sm btn-primary hidden-print" ng-click="ok()"><span class="glyphicon glyphicon-floppy-disk"></span> Salvar</button>
+                <button class="btn btn-sm btn-warning hidden-print" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+            </span>
+        </div>
+    </form>
+</script>
 
 
 

@@ -25,7 +25,8 @@ var App;
 
                         if (_this.EmpresaSelecionada.CEMP != "") {
                             _this.loginOK();
-                            $location.path('/home');
+
+                            $location.path('/home');    
                             toaster.clear();
                         }
                         else {
@@ -44,6 +45,7 @@ var App;
                                     _this.EmpresaSelecionada.CEMP = emp[0].CEMP;
                                     _this.EmpresaSelecionada.FANTASIA = emp[0].FANTASIA;
                                     _this.loginOK();
+
                                     $location.path('/home');
                                     toaster.clear();
                                 }

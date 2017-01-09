@@ -53,11 +53,21 @@
                         <luar-text container-class="col-md-6" label="Vendedor" readonly required name="VENDEDOR"
                                    ng-model="ctrl.currentRecord.VENDEDOR">
                         </luar-text>
+                        
                     </div>
 
                     <div class="row">
-                        <luar-text container-class="col-md-3" label="Transportadora" name="COD_CADTRANSPORTADORA" required ng-model="ctrl.currentRecord.COD_CADTRANSPORTADORA"></luar-text>
-                        <luar-text container-class="col-md-3" label="Entregador" name="COD_CADENTREGADOR" required ng-model="ctrl.currentRecord.COD_CADENTREGADOR"></luar-text>
+                        <luar-select container-class="col-md-3" label="Transportadora"
+                                     name="COD_CADTRANSPORTADORA" required
+                                     ng-options="item.id as item.FANTASIA for item in ::ctrl.TransportadoraLook"
+                                     ng-model="ctrl.currentRecord.COD_CADTRANSPORTADORA">
+                        </luar-select>
+
+                        <luar-select container-class="col-md-3" label="Entregador"
+                                     name="COD_CADENTREGADOR" required
+                                     ng-options="item.id as item.FANTASIA for item in ::ctrl.EntregadorLook"
+                                     ng-model="ctrl.currentRecord.COD_CADENTREGADOR">
+                        </luar-select>
                     </div>
 
                     <div class="row">
@@ -135,12 +145,12 @@
                 <div class="row">
                     <luar-text container-class="col-md-2" label="Item" name="ITEM" readonly ng-model="ItemSelecionado.ITEM"></luar-text>
                 </div>
-                <div class="row">
+                <!--<div class="row">
                     <luar-select container-class="col-md-12" label="Operação de Saida" name="COD_FATOPERACAOSAIDA" required
                                  ng-options="item.id as item.NOME for item in ::OperacaoSaidaLook"
                                  ng-model="ItemSelecionado.COD_FATOPERACAOSAIDA">
                     </luar-select>
-                </div>
+                </div>-->
 
                 <div class="row">
                     <luar-text container-class="col-md-2" label="Produto" name="COD_CADPRODUTO" required style="display:none" ng-model="ItemSelecionado.COD_CADPRODUTO"></luar-text>

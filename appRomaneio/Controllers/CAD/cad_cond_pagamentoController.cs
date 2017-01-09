@@ -1,4 +1,4 @@
-﻿namespace cad_colaborador.Controllers
+﻿namespace Controllers.CAD
 {
     using Infra.Base.Interface.Base;
     using Models.Cadastros;

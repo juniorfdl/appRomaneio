@@ -19,7 +19,6 @@ var App;
                 this.$rootScope = $rootScope;
                 this.apiCondPagamento = api('Cad_Cond_Pagamento');
                 this.apiOperacaoSaida = api('Fat_Operacao_Saida');
-                this.apiProdutosLook = api('cad_produto/ProdutosLook');
 
                 this.ClientesLook = ClientesLook;
                 this.CondPagamentoLook = CondPagamentoLook;
@@ -70,7 +69,8 @@ var App;
             }
 
             function ProdutosLook(Nome) {
-                return this.apiProdutosLook.get(Nome);
+                var param = { NOME: Nome };
+                return this.api.allLook(param, 'fat_romaneio_pao/ProdutosLook');
             }
 
             function CondPagamentoLook() {

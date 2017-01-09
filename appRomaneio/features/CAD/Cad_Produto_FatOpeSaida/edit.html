@@ -1,0 +1,48 @@
+﻿<luar-crud crud="ctrl" title="Produtos Operação">
+
+    <luar-list list="ctrl.lista" ng-show="!Cadastro">
+        <column id="CODIGO" title="Produto" searchable="true"></column>
+        <column id="PRODUTO" title="Nome Produto" searchable="true"></column>
+        <column id="COD_FATOPERACAOSAIDA" title="Operação" searchable="true"></column>
+        <column id="OPERACAO_SAIDA" title="Nome Operação" searchable="true"></column>
+        <luar-table></luar-table>
+    </luar-list>
+
+    <luar-main-form ng-show="Cadastro">
+
+        <fieldset>
+            <div class="row">
+                <luar-text container-class="col-md-12" label="Produto" style="display:none" name="codigo" visible="false" required ng-model="ctrl.currentRecord.COD_PRODUTO"></luar-text>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 ng-scope" name="Produto">
+                    <md-autocomplete md-selected-item="ctrl.selectedItem"
+                                     md-search-text-change="ctrl.querySearch(ctrl.searchText)"
+                                     md-search-text="ctrl.searchText"
+                                     md-selected-item-change="ctrl.selectedItemChange(item)"
+                                     md-items="item in ctrl.data"
+                                     md-item-text="item.NOME" md-min-length="2"
+                                     md-autoselect="true"
+                                     placeholder="Pesquisar Produto">
+                        <md-item-template>
+                            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.NOME}}</span>
+                        </md-item-template>
+                    </md-autocomplete>
+                </div>
+            </div>
+
+            <div class="row">
+                <luar-select container-class="col-md-12" label="Operação de Saida" name="COD_FATOPERACAOSAIDA" required
+                             ng-options="item.id as item.NOME for item in ::ctrl.OperacaoSaidaLook"
+                             ng-model="ctrl.currentRecord.COD_FATOPERACAOSAIDA">
+                </luar-select>
+            </div>
+        </fieldset>
+
+    </luar-main-form>
+
+</luar-crud>
+
+
+

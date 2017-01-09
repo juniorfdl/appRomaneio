@@ -339,6 +339,11 @@
                     //db.LogarEntidades(db.ChangeTracker.Entries());
                     throw;
                 }
+                catch (InvalidOperationException e)
+                {
+                    dbContextTransaction.Rollback();
+                    return Content(HttpStatusCode.Accepted, new { mensagem_erro = e.Message });
+                }
             }
 
             BeforeReturn(item);
@@ -358,7 +363,7 @@
             //    ModelState["item.Flag"].Errors.Clear();
             //}
 
-            ExecutarAntesPost(item);
+            ExecutarAntesPost(item);            
 
             if (item.id == 0)
             {
@@ -412,6 +417,11 @@
                         return Content(HttpStatusCode.Accepted, new { mensagem_erro = e.InnerException.InnerException.Message });
                     else
                         return Content(HttpStatusCode.Accepted, new { mensagem_erro = e.Message });
+                }
+                catch(InvalidOperationException e)
+                {
+                    dbContextTransaction.Rollback();
+                    return Content(HttpStatusCode.Accepted, new { mensagem_erro = e.Message });
                 }
             }
 

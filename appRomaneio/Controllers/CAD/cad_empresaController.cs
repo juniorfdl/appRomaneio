@@ -12,9 +12,9 @@
     using System.Web.Http;
     using System.Web.Http.Description;
 
-    public class cad_vendedorController : CrudControllerBase<CAD_VENDEDOR>
+    public class cad_empresaController : CrudControllerBase<CAD_EMPRESA>
     {
-        protected override IOrderedQueryable<CAD_VENDEDOR> Ordenar(IQueryable<CAD_VENDEDOR> query)
+        protected override IOrderedQueryable<CAD_EMPRESA> Ordenar(IQueryable<CAD_EMPRESA> query)
         {
             return query.OrderBy(e => e.id);
         }

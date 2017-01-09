@@ -378,15 +378,19 @@ var App;
 
             CrudBaseEditCtrl.prototype.AtualizarLista = function (result) {
                 debugger
-                var _this = this;
 
-                if (_this.AtualizarConsultaPorId) {
-                    _this.crudSvc.buscarConsultaPorId(result.id).then(function (dados) {
-                        //result = dados;
-                        _this.SetItemLista(dados);
-                    });
-                } else {
-                    _this.SetItemLista(result);                    
+                if (result != null) {
+
+                    var _this = this;
+
+                    if (_this.AtualizarConsultaPorId) {
+                        _this.crudSvc.buscarConsultaPorId(result.id).then(function (dados) {
+                            //result = dados;
+                            _this.SetItemLista(dados);
+                        });
+                    } else {
+                        _this.SetItemLista(result);
+                    }
                 }
 
             };
@@ -402,10 +406,12 @@ var App;
                         .then(function (result) {
                             debugger;
                             // resetar status do form para evitar validação de dirty ao navegar para outra página 
-                            _this.mainForm.$setPristine();
-                            _this.mainForm.$setUntouched();
-                            _this.registroAtualizado();
-                            _this.AtualizarLista(result);
+                            if (result != null) {
+                                _this.mainForm.$setPristine();
+                                _this.mainForm.$setUntouched();
+                                _this.registroAtualizado();
+                                _this.AtualizarLista(result);
+                            }
                             return result;
                         }).catch(function (erros) { return _this.$q.reject(_this.tratarErros(_this.mainForm, erros)); });
                 });

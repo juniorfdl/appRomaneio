@@ -191,9 +191,10 @@ var App;
                         _this.toaster.error("Atenção", response.data.mensagem_erro);
                     } else {
                         _this.toaster.success("Atenção", "Operação executada com sucesso!");
-                    }
 
-                    return angular.extend(entity, payload);
+                      return angular.extend(entity, payload);
+                    }
+                    
                 }).catch(function (data) {
                     return _this.$q.reject(_this.TratarErroDaApi(data));
                 });

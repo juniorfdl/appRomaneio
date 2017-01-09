@@ -26,7 +26,7 @@ var App;
                 this.api = api;
                 this.CrudRomaneioService = CrudRomaneioService;
                 this.crudSvc = CrudRomaneioService;
-                this.AtualizarConsultaPorId = true;
+                this.AtualizarConsultaPorId = true; //Apos conformar um registro ele atualiza a consulta executendo uma pesquisa
                 CondPagamentoLook();
                 OperacaoSaidaLook();
                 TransportadoraLook();

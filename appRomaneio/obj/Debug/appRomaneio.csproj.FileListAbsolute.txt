@@ -199,6 +199,6 @@ C:\ProjetosWeb\Romaneio\appRomaneio\appRomaneio\bin\System.Web.Razor.xml
 C:\ProjetosWeb\Romaneio\appRomaneio\appRomaneio\bin\System.Web.WebPages.xml
 C:\ProjetosWeb\Romaneio\appRomaneio\appRomaneio\bin\System.Web.WebPages.Deployment.xml
 C:\ProjetosWeb\Romaneio\appRomaneio\appRomaneio\bin\System.Web.WebPages.Razor.xml
-C:\ProjetosWeb\Romaneio\appRomaneio\appRomaneio\obj\Debug\appRomaneio.csprojResolveAssemblyReference.cache
 C:\ProjetosWeb\Romaneio\appRomaneio\appRomaneio\obj\Debug\appRomaneio.dll
 C:\ProjetosWeb\Romaneio\appRomaneio\appRomaneio\obj\Debug\appRomaneio.pdb
+C:\ProjetosWeb\Romaneio\appRomaneio\appRomaneio\obj\Debug\appRomaneio.csprojResolveAssemblyReference.cache

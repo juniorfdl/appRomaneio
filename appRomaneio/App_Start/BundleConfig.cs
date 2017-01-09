@@ -55,7 +55,9 @@ namespace appRomaneio
                 "~/features/FAT/Fat_Romaneio_Pao/ctrl.js",
                 "~/features/FAT/Fat_Romaneio_Pao/services.js",
                 "~/features/SIS/Sis_Usuario/ctrl.js",
-                "~/features/SIS/Sis_Usuario/services.js"
+                "~/features/SIS/Sis_Usuario/services.js",
+                "~/features/CAD/Cad_Produto_FatOpeSaida/ctrl.js",
+                "~/features/CAD/Cad_Produto_FatOpeSaida/services.js"
                 ));
         }
     }

@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 
-namespace Cad_Servico.Controllers
+namespace Controllers.CAD
 {
     public class cad_servicoController : CrudControllerBase<CAD_SERVICO>
     {

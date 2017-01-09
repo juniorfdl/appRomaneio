@@ -209,7 +209,10 @@
     <Compile Include="Controllers\CAD\cad_colaboradorController.cs" />
     <Compile Include="Controllers\CAD\cad_cond_pagamentoController.cs" />
     <Compile Include="Controllers\CAD\cad_produtoController.cs" />
+    <Compile Include="Controllers\CAD\cad_empresaController.cs" />
+    <Compile Include="Controllers\CAD\v_cad_produto_fatopesaidaController.cs" />
     <Compile Include="Controllers\CAD\cad_servicoController.cs" />
+    <Compile Include="Controllers\CAD\cad_produto_fatopesaidaController.cs" />
     <Compile Include="Controllers\CAD\cad_vendedorController.cs" />
     <Compile Include="Controllers\FAT\fat_operacao_saidaController.cs" />
     <Compile Include="Controllers\FAT\fat_romaneio_paoController.cs" />
@@ -223,6 +226,7 @@
     <Compile Include="Infra\Base\Context.cs" />
     <Compile Include="Infra\Base\ControllerBase.cs" />
     <Compile Include="Infra\Base\CrudControllerBase.cs" />
+    <Compile Include="Infra\Base\ExceptionAttribute.cs" />
     <Compile Include="Infra\Base\FuncoesBanco.cs" />
     <Compile Include="Infra\Base\QueryableExtensions.cs" />
     <Compile Include="Infra\Base\ResultadoDaBusca.cs" />
@@ -231,6 +235,8 @@
     <Compile Include="Models\CAD\CAD_COLABORADOR.cs" />
     <Compile Include="Models\CAD\CAD_COND_PAGAMENTO.cs" />
     <Compile Include="Models\CAD\CAD_EMPRESA.cs" />
+    <Compile Include="Models\CAD\V_CAD_PRODUTO_FATOPESAIDA.cs" />
+    <Compile Include="Models\CAD\CAD_PRODUTO_FATOPESAIDA.cs" />
     <Compile Include="Models\SIS\SIS_USUARIO_EMPRESA.cs" />
     <Compile Include="Models\CAD\CAD_PRODUTO.cs" />
     <Compile Include="Models\CAD\CAD_SERVICO.cs" />
@@ -268,6 +274,9 @@
     <Content Include="Content\toaster.css" />
     <Content Include="favicon.ico" />
     <Content Include="features\CAD\Cad_Cond_Pagamento\services.js" />
+    <Content Include="features\CAD\Cad_Produto_FatOpeSaida\ctrl.js" />
+    <Content Include="features\CAD\Cad_Produto_FatOpeSaida\edit.html" />
+    <Content Include="features\CAD\Cad_Produto_FatOpeSaida\services.js" />
     <Content Include="features\FAT\Fat_Romaneio_Pao\ctrl.js" />
     <Content Include="features\FAT\Fat_Romaneio_Pao\edit.html" />
     <Content Include="features\FAT\Fat_Romaneio_Pao\services.js" />
@@ -342,6 +351,7 @@
     <Content Include="Scripts\Base\popup.js" />
     <Content Include="Scripts\Base\rest.js" />
     <Content Include="Scripts\Base\security.js" />
+    <Content Include="Scripts\Base\sweetalert.min.js" />
     <Content Include="Scripts\Base\thumb.js" />
     <Content Include="Scripts\Base\wizard.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
