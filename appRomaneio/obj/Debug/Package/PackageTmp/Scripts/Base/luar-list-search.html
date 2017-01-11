@@ -1,5 +1,5 @@
 ﻿<form class="form-inline toolbar col-xs-10" ng-submit="ctrl.submit()">
-    <select class="form-control desktop-only" ng-if="ctrl.campos" 
+    <select class="form-control" ng-if="ctrl.campos" 
             ng-options="item.id as item.title for item in ::ctrl.camposParaFiltro" ng-model="ctrl.listCtrl.campoSelecionado">
     </select>
     <div class="input-group">

@@ -23,8 +23,8 @@ var App;
                             localStorage.setItem("luarusr", userName);
                             localStorage.setItem("luarpass", password);
                             localStorage.setItem("ADMIN", response.ADMIN);
-                            localStorage.setItem("VENDEDOR", response.VENDEDOR);
-                            localStorage.setItem("COD_CADVENDEDOR", response.COD_CADVENDEDOR);
+                            //localStorage.setItem("VENDEDOR", response.VENDEDOR);
+                            //localStorage.setItem("COD_CADVENDEDOR", response.COD_CADVENDEDOR);
                             $rootScope.ADMIN = response.ADMIN == "S";
                         }
                         catch (e) {

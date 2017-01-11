@@ -11,3 +11,5 @@ appRomaneio/obj/Debug/appRomaneio.pdb
 *.cache
 *.suo
 *.pdb
+*.dll
+*.pdb

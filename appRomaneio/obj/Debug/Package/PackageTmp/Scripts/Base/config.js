@@ -3,9 +3,9 @@ var App;
     'use strict';
 
     App.modules.App.constant('luarApp',
-    {
-        BASEURL: document.location.origin,
-        WEBAPI: document.location.origin,
+    {        
+        BASEURL: document.baseURI,
+        WEBAPI: document.baseURI,
         ITENS_POR_PAGINA: '15'
         //ISDEBUG: true
     });
