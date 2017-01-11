@@ -33,6 +33,9 @@
 
         [NotMapped]
         public string PRODUTO { get; set; }
+
+        [NotMapped]
+        public string CEMP { get; set; }
     }
 
 }

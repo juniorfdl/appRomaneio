@@ -15,5 +15,7 @@
         [Column("COD_CADCONDPAGAMENTO")]
         public int id { get; set; }
         public string NOME { get; set; }
+        [NotMapped]
+        public string CEMP { get; set; }
     }
 }

@@ -47,7 +47,6 @@ var App;
                 }
 
                 function removeItens(posicao, SweetAlert) {
-                    debugger;
                     var _this = this;
                     SweetAlert.swal({
                         title: "Excluir este registro?",

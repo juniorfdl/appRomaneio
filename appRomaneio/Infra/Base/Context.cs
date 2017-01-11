@@ -32,7 +32,7 @@ namespace Infra.Base
         #region Entidades tipo sistema
         public virtual DbSet<SIS_USUARIO> SIS_USUARIO { get; set; }
         public virtual DbSet<SIS_USUARIO_EMPRESA> SIS_USUARIO_EMPRESA { get; set; }
-       // public virtual DbSet<FiltrosBase> FiltrosBase { get; set; }        
+        public virtual DbSet<SIS_MENU> SIS_MENU { get; set; }
         #endregion
 
         #region Entidades tipo Cadastros

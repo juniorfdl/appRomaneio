@@ -13,5 +13,6 @@ namespace Infra.Base.Interface
         //int CodigoUsuario { get; set; }
 
         int id { get; set; }
+        string CEMP { get; set; }
     }
 }

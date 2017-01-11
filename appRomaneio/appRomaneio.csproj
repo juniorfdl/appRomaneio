@@ -237,6 +237,7 @@
     <Compile Include="Models\CAD\CAD_EMPRESA.cs" />
     <Compile Include="Models\CAD\V_CAD_PRODUTO_FATOPESAIDA.cs" />
     <Compile Include="Models\CAD\CAD_PRODUTO_FATOPESAIDA.cs" />
+    <Compile Include="Models\SIS\SIS_MENU.cs" />
     <Compile Include="Models\SIS\SIS_USUARIO_EMPRESA.cs" />
     <Compile Include="Models\CAD\CAD_PRODUTO.cs" />
     <Compile Include="Models\CAD\CAD_SERVICO.cs" />

@@ -18,6 +18,7 @@
     using System.Web.Http.Description;
     using Infra.Base;
     using System.Globalization;
+    using Models.SIS;
 
     public abstract class CrudController<T, TProjecao> : ControllerBase, IDisposable
         where T : class, IEntidadeBase
@@ -60,16 +61,16 @@
                 else
                 if (propertyInfo.PropertyType == typeof(Nullable<int>))
                 {
-                   // //var myInstance = new myClass();
-                   // var equalsMethod = typeof(Int32?).GetMethod("Equals", new[] { typeof(Int32?) });
-                   // int? nullableInt = Convert.ToInt32(termoDePesquisa);
-                   // var nullableIntExpr = System.Linq.Expressions.Expression.Constant(nullableInt);
-                   // //var myInstanceExpr = System.Linq.Expressions.Expression.Constant(myInstance);
-                   // var propertyExpr = property;
-                   //// body = Expression.Call(propertyExpr, equalsMethod, nullableIntExpr); // This line throws the exception.     
+                    // //var myInstance = new myClass();
+                    // var equalsMethod = typeof(Int32?).GetMethod("Equals", new[] { typeof(Int32?) });
+                    // int? nullableInt = Convert.ToInt32(termoDePesquisa);
+                    // var nullableIntExpr = System.Linq.Expressions.Expression.Constant(nullableInt);
+                    // //var myInstanceExpr = System.Linq.Expressions.Expression.Constant(myInstance);
+                    // var propertyExpr = property;
+                    //// body = Expression.Call(propertyExpr, equalsMethod, nullableIntExpr); // This line throws the exception.     
 
-                   // var converted = Expression.Convert(nullableIntExpr, typeof(int?));
-                   // body = Expression.Call(propertyExpr, equalsMethod, converted);                    
+                    // var converted = Expression.Convert(nullableIntExpr, typeof(int?));
+                    // body = Expression.Call(propertyExpr, equalsMethod, converted);                    
 
 
                 }
@@ -130,7 +131,9 @@
             int pagina = 1, int itensPorPagina = 0, string campoPesquisa = "",
             [FromUri] List<string> filtrosBaseNome = null, [FromUri] List<string> filtrosBaseValor = null)
         {
-            var queryOriginal = db.Set<T>().AsQueryable().Select(this.Selecionar());
+            var Item = this.Selecionar();
+
+            var queryOriginal = db.Set<T>().AsQueryable().Select(Item);
 
             if (!string.IsNullOrWhiteSpace(termo))
             {
@@ -139,7 +142,11 @@
 
             if (!string.IsNullOrWhiteSpace(empresa))
             {
-                queryOriginal = this.Filtrar(queryOriginal, empresa, "CEMP");
+                var NomeMenu = Item.ReturnType.Name.ToUpper() + ".DLL";
+                var MENU = db.Set<SIS_MENU>().Where(b => b.DLL == NomeMenu).FirstOrDefault();
+
+                if (MENU == null || MENU.EMP != "S")
+                  queryOriginal = this.Filtrar(queryOriginal, empresa, "CEMP");
             }
 
             for (var i = 0; i < filtrosBaseNome.Count; i++)
@@ -268,6 +275,8 @@
             //    ModelState["item.Flag"].Errors.Clear();
             //}
 
+            ConfCEMP(item);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -363,13 +372,23 @@
             //    ModelState["item.Flag"].Errors.Clear();
             //}
 
-            ExecutarAntesPost(item);            
+            ExecutarAntesPost(item);
 
             if (item.id == 0)
             {
-                var fb = new FuncoesBanco(db);
-                item.id = fb.BuscarPKRegistro(item.GetType().Name);
+                try
+                {
+                    var fb = new FuncoesBanco(db);
+                    item.id = fb.BuscarPKRegistro(item.GetType().Name);
+                }
+                catch
+                {
+                    return Content(HttpStatusCode.Accepted, new { mensagem_erro = "Problema com generator da tabela " + item.GetType().Name });
+                    //throw new InvalidOperationException(string.Format("Problema com generator da tabela " + item.GetType().Name));
+                }
             }
+
+            ConfCEMP(item);
 
             if (!ModelState.IsValid)
             {
@@ -418,7 +437,7 @@
                     else
                         return Content(HttpStatusCode.Accepted, new { mensagem_erro = e.Message });
                 }
-                catch(InvalidOperationException e)
+                catch (InvalidOperationException e)
                 {
                     dbContextTransaction.Rollback();
                     return Content(HttpStatusCode.Accepted, new { mensagem_erro = e.Message });
@@ -427,6 +446,27 @@
 
             BeforeReturn(item);
             return CreatedAtRoute("DefaultApi", new { id = item.id }, item);
+        }
+
+        private void ConfCEMP(T item)
+        {
+            var NomeMenu = item.GetType().Name.ToUpper() + ".DLL";
+
+            if (NomeMenu != "CAD_EMPRESA.DLL")
+            {
+                var MENU = db.Set<SIS_MENU>().Where(b => b.DLL == NomeMenu).FirstOrDefault();
+
+                if (MENU != null && MENU.EMP == "S")
+                {
+                    foreach (var prop in item.GetType().GetProperties())
+                    {
+                        if (prop.Name == "CEMP")
+                        {
+                            prop.SetValue(item, "0");
+                        }
+                    }
+                }
+            }
         }
 
         private IHttpActionResult ValidarNovaEntidade(IEntidadeBase item)

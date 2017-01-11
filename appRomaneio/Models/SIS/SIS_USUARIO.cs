@@ -25,5 +25,8 @@
         public string VENDEDOR { get; set; }
         [NotMapped]
         public virtual dynamic Empresas { get; set; }
+
+        [NotMapped]
+        public string CEMP { get; set; }
     }
 }

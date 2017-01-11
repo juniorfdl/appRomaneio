@@ -20,6 +20,8 @@
         [NotMapped]
         public int COD_PRODUTO { get; set; }
         [NotMapped]
-        public string PRODUTO_NOME { get; set; }        
+        public string PRODUTO_NOME { get; set; }
+        [NotMapped]
+        public string CEMP { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Models.FAT
+﻿namespace Models.SIS
 {
     using Infra.Base.Interface;
     using System;
@@ -9,16 +9,18 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public partial class FAT_OPERACAO_SAIDA : IEntidadeBase
+    public partial class SIS_MENU : IEntidadeBase
     {
         [Key]
-        [Column("COD_FATOPERACAOSAIDA")]
+        [Column("CODIGOSISMENU")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
         [Required]
-        public string NOME { get; set; }
+        public string DLL { get; set; }
+
+        public string EMP { get; set; }
+
         [NotMapped]
         public string CEMP { get; set; }
     }
-
 }

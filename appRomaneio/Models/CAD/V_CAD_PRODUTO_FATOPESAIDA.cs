@@ -19,5 +19,7 @@
         public int CODIGO { get; set; }
         public string PRODUTO { get; set; }
         public string OPERACAO_SAIDA { get; set; }
+        [NotMapped]
+        public string CEMP { get; set; }
     }
 }

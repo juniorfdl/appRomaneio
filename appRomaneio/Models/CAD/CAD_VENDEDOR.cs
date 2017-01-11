@@ -17,7 +17,8 @@
         [Required]
         public string FANTASIA { get; set; }
         [Required]
-        public string CODIGO { get; set; }       
+        public string CODIGO { get; set; }        
+        public string CEMP { get; set; }
 
     }
 }

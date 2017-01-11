@@ -18,7 +18,8 @@
         public string NOME { get; set; }
         [Required]
         public string CODIGO { get; set; }
-        public int? COD_CADUNIDADE { get; set; }
-        
+        public int? COD_CADUNIDADE { get; set; }        
+        public string CEMP { get; set; }
+
     }
 }

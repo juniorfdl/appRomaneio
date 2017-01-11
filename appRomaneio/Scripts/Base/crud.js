@@ -117,166 +117,7 @@ var App;
             return CrudBaseCtrl;
         })();
         Controllers.CrudBaseCtrl = CrudBaseCtrl;
-        /**
-         * Classe base que implementa uma controller básica para listagem de registros.
-         */
-        //var CrudBaseListCtrl = (function (_super) {
-        //    __extends(CrudBaseListCtrl, _super);
-        //    function CrudBaseListCtrl() {
-        //        _super.apply(this, arguments);
-        //        /**
-        //         * Termo de pesquisa digitado pelo usuário.
-        //         *
-        //         * @view
-        //         */
-        //        this.termoDigitado = "";
-        //        /**
-        //         * Identificador do campo para pesquisa selecionado pelo usuário.
-        //         *
-        //         * @view
-        //         */
-        //        this.campoSelecionado = "";
-        //    }
-        //    /**
-        //     * Configura os parâmetros iniciais da tela, por exemplo,
-        //     * para recuperar as informações utilizadas na última abertura da tela
-        //     */
-        //    CrudBaseListCtrl.prototype.setParams = function (params) {
-        //        if (!params)
-        //            return;
-        //        this._paginaAtual = params.pagina;
-        //        if (params.campoPesquisa) {
-        //            this.campoSelecionado = params.campoPesquisa;
-        //        }
-        //        this.termoDigitado = params.termo;
-        //    };
-        //    Object.defineProperty(CrudBaseListCtrl.prototype, "lista", {
-        //        /**
-        //         * Lista paginada de registros.
-        //         *
-        //         * @view
-        //         */
-        //        get: function () {
-        //            return this._lista;
-        //        },
-        //        set: function (valor) {
-        //            this._lista = valor;
-        //            if (valor) {
-        //                this.setParams(valor.$params);
-        //            }
-        //        },
-        //        enumerable: true,
-        //        configurable: true
-        //    });
-        //    Object.defineProperty(CrudBaseListCtrl.prototype, "ultimoTermo", {
-        //        /* campos de controle de buscas */
-        //        get: function () {
-        //            return this.lista.$params.termo;
-        //        },
-        //        enumerable: true,
-        //        configurable: true
-        //    });
-        //    Object.defineProperty(CrudBaseListCtrl.prototype, "ultimoCampo", {
-        //        get: function () {
-        //            return this.lista.$params.campoPesquisa;
-        //        },
-        //        enumerable: true,
-        //        configurable: true
-        //    });
-        //    Object.defineProperty(CrudBaseListCtrl.prototype, "paginaAtual", {
-        //        get: function () {
-        //            return this._paginaAtual;
-        //        },
-        //        set: function (valor) {
-        //            this._paginaAtual = valor;
-        //            this.buscar();
-        //        },
-        //        enumerable: true,
-        //        configurable: true
-        //    });
-        //    /**
-        //     * Executa uma busca de um termo, utilizando o último critério de ordenação utilizado.
-        //     *
-        //     * Caso o parâmetro campo não seja informado, o servidor irá decidir como aplicar o termo de pesquisa.
-        //     *
-        //     * ~~~
-        //     * this.buscar("Item 1");
-        //     * this.buscar("Item 1", "descricao");
-        //     * ~~~
-        //     *
-        //     * @view
-        //     *
-        //     * @param termo Termo de pesquisa.
-        //     * @param campo Nome do campo da entidade que deve ser utilizado para localizar os registros.
-        //     */
-        //    CrudBaseListCtrl.prototype.buscar = function (termo, campo) {
-        //        var _this = this;
-        //        if (termo === undefined)
-        //            termo = this.ultimoTermo;
-        //        if (campo === undefined)
-        //            campo = this.ultimoCampo;
-        //        if (termo !== this.ultimoTermo || campo !== this.ultimoCampo) {
-        //            this._paginaAtual = 1;
-        //        }
-        //        this.crudSvc
-        //            .buscar(termo, this.paginaAtual, this._campoOrdenacao, this._direcaoAsc, luarApp.ITENS_POR_PAGINA, campo)
-        //            .then(function (lista) {
-        //                _this.lista = lista;
-        //            });
-        //    };
-        //    /**
-        //     * Executa a exclusão do registro no servidor, após solicitar confirmação ao usuário.
-        //     *
-        //     * @view
-        //     *
-        //     * @param item  Registro a ser excluído.
-        //     */
-        //    CrudBaseListCtrl.prototype.excluir = function (item) {
-        //        var _this = this;
-        //        var confirmarFn = function () {
-        //            debugger;
-
-        //            if (item == null) {
-        //                item = _this.currentRecord;
-        //            }
-
-        //            _this.crudSvc.excluir(item).then(function () {
-        //                var index = _this.lista.indexOf(item);
-        //                if (index >= 0) {
-        //                    _this.lista.splice(index, 1);
-        //                }
-        //            }).catch(function (erros) { return _this.toaster.warning("Atenção", erros[0]); });
-        //        };
-        //        this.confirmarExclusao(confirmarFn);
-        //    };
-        //    /**
-        //     * Executa uma busca aplicando uma ordem específica nos registros.
-        //     *
-        //     * @view
-        //     *
-        //     * @param nomeCampo Nome do campo da entidade pelo qual os registros devem ser classificados.
-        //     * @returns         `true` se a classificação solicitada está em ordem ascendente.
-        //     */
-        //    CrudBaseListCtrl.prototype.ordenar = function (nomeCampo) {
-        //        if (nomeCampo === this._campoOrdenacao) {
-        //            this._direcaoAsc = !this._direcaoAsc;
-        //        }
-        //        else {
-        //            this._campoOrdenacao = nomeCampo;
-        //            this._direcaoAsc = true;
-        //        }
-        //        this.buscar();
-        //        return this._direcaoAsc;
-        //    };
-        //    return CrudBaseListCtrl;
-        //})(CrudBaseCtrl);
-        //Controllers.CrudBaseListCtrl = CrudBaseListCtrl;
-
-        /**
-         * Implementação básica de uma controller para edição de CRUD.
-         *
-         * @abstract
-         */
+     
         var CrudBaseEditCtrl = (function (_super) {
             __extends(CrudBaseEditCtrl, _super);
             function CrudBaseEditCtrl() {
@@ -411,6 +252,7 @@ var App;
                                 _this.mainForm.$setUntouched();
                                 _this.registroAtualizado();
                                 _this.AtualizarLista(result);
+                                _this.$rootScope.Cadastro = false;
                             }
                             return result;
                         }).catch(function (erros) { return _this.$q.reject(_this.tratarErros(_this.mainForm, erros)); });
@@ -430,21 +272,7 @@ var App;
 
                     this.NovoRegistro = (_this.currentRecord.id == null);
 
-                    var result = this.internalSalvar();
-
-                    //if (result) {                       
-
-                    //debugger;
-                    //var index = _this._lista.indexOf(_this.currentRecord);
-
-                    //if (index === -1) {
-                    //    _this._lista.push(_this.currentRecord);
-                    //}
-                    //this.crudSvc.buscar('', 1, 'id', false, 15, '').then(function (lista) {
-                    //    debugger;
-                    //    _this._lista = lista;
-                    //});
-                    //}
+                    var result = this.internalSalvar();                    
                 }
             };
             CrudBaseEditCtrl.prototype.tratarErros = function (form, erros) {
@@ -573,10 +401,23 @@ var App;
                         var index = _this.lista.indexOf(item);
                         if (index >= 0) {
                             _this.lista.splice(index, 1);
-                            _this.currentRecord = null;
-                            _this.toaster.warning("Atenção", "Registro excluido com sucesso!");
-
+                            _this.currentRecord = null;                            
                         }
+                        else {
+
+                            var i;
+                            for (i = 0; i < _this.lista.length - 1; i++) {
+
+                                if (_this.lista[i].id = item.id) {
+                                    _this.lista.splice(_this.lista[i], 1);
+                                    break;
+                                }
+                            }
+                        }
+
+                        _this.$rootScope.Cadastro = false;
+                        _this.toaster.warning("Atenção", "Registro excluido com sucesso!");                        
+
                     }).catch(function (erros) { return _this.toaster.warning("Atenção", erros[0]); });
                 };
                 this.confirmarExclusao(confirmarFn);
