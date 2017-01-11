@@ -20,6 +20,7 @@
     using System.Globalization;
     using Models.SIS;
     using System.Web.Http.ModelBinding;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public abstract class CrudController<T, TProjecao> : ControllerBase, IDisposable
         where T : class, IEntidadeBase
@@ -33,6 +34,14 @@
             var propertyInfo = typeof(TProjecao).GetProperty(campoPesquisa, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
             var property = Expression.Property(parameter, propertyInfo);
             Expression body = null;
+
+            var notMapped = typeof(TProjecao).GetProperty(campoPesquisa).GetCustomAttributes(typeof(NotMappedAttribute), false);
+
+            if (notMapped.Length > 0) // testa se o campo é NotMapped, se for não faz where
+            {
+                return query;
+            }
+
 
             try
             {
