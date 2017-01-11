@@ -16,7 +16,7 @@ namespace Infra.Base
     public class Context : DbContext
     {        
         public Context() : 
-            base(new FbConnection(@"database=localhost:SUPORTECROISSANT;Port=3050;user=sysdba;password=masterkey"), true)
+            base(new FbConnection(@"database=localhost:WEBCROISSANT;Port=3050;user=sysdba;password=masterkey"), true)
           //base("Name=BASE")
         {            
             Database.SetInitializer<Context>(null);

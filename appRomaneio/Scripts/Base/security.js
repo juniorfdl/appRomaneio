@@ -12,7 +12,7 @@ var App;
         App.modules.Services.factory('security', function ($http, $window, $rootScope, $modal, api, luarApp) {
             var service = {
                 login: function (userName, password) {
-                    
+
                     cachedCredentials.userName = userName;
                     cachedCredentials.password = password;
 
@@ -23,8 +23,12 @@ var App;
                             localStorage.setItem("luarusr", userName);
                             localStorage.setItem("luarpass", password);
                             localStorage.setItem("ADMIN", response.ADMIN);
-                            //localStorage.setItem("VENDEDOR", response.VENDEDOR);
-                            //localStorage.setItem("COD_CADVENDEDOR", response.COD_CADVENDEDOR);
+
+                            if (response.COD_CADVENDEDOR != null) {
+                                localStorage.setItem("VENDEDOR", response.VENDEDOR);
+                                localStorage.setItem("COD_CADVENDEDOR", response.COD_CADVENDEDOR);
+                            }
+
                             $rootScope.ADMIN = response.ADMIN == "S";
                         }
                         catch (e) {
@@ -38,7 +42,7 @@ var App;
 
                 },
                 logout: function () {
-                   
+
                     localStorage.clear();
                     cachedCredentials.userName = "";
                     cachedCredentials.password = "";
@@ -46,7 +50,7 @@ var App;
                     $rootScope.currentUser = service.currentUser;
                     $window.location.assign('login');
                     $rootScope.$emit("security:logout");
-                    return service.isAuthenticated();                   
+                    return service.isAuthenticated();
                 },
                 authorize: function () {
                     // authorizes the session by fetching
@@ -76,7 +80,7 @@ var App;
 
                 empresas: function (id) {
                     var request = api("sis_usuario").query("Empresa", { id: id });
-                    return request;                    
+                    return request;
                 },
 
                 // Information about the current user

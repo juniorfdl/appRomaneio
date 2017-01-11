@@ -24,6 +24,8 @@
         [Required]
         public int COD_CADTRANSPORTADORA { get; set; }
         [Required]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime DATA_EMISSAO { get; set; }
         [Required]
         public int COD_CADCONDPAGAMENTO { get; set; }
@@ -31,10 +33,14 @@
         public string TIPO_FRETE { get; set; }        
         public int CODIGO { get; set; }
         [Required]
+        [StringLength(20, ErrorMessage = "Nro O.C. Cliente não pode ter mais que 20 caracteres")]
+        [Display(Name = "Nro O.C. Cliente")]
         public string CODIGO_OC_CLIENTE { get; set; }
         public Nullable<int> COD_CADVENDEDOR { get; set; }
         public Nullable<int> COD_FATPEDIDO { get; set; }
         [Required]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime DATA_ENTREGA { get; set; }
         [Required]
         public int COD_CADENTREGADOR { get; set; }

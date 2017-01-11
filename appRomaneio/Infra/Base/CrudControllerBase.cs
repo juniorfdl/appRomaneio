@@ -19,6 +19,7 @@
     using Infra.Base;
     using System.Globalization;
     using Models.SIS;
+    using System.Web.Http.ModelBinding;
 
     public abstract class CrudController<T, TProjecao> : ControllerBase, IDisposable
         where T : class, IEntidadeBase
@@ -146,7 +147,7 @@
                 var MENU = db.Set<SIS_MENU>().Where(b => b.DLL == NomeMenu).FirstOrDefault();
 
                 if (MENU == null || MENU.EMP != "S")
-                  queryOriginal = this.Filtrar(queryOriginal, empresa, "CEMP");
+                    queryOriginal = this.Filtrar(queryOriginal, empresa, "CEMP");
             }
 
             for (var i = 0; i < filtrosBaseNome.Count; i++)
@@ -279,7 +280,7 @@
 
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return TestarModelState(ModelState);
             }
 
             //if (id != item.Id)
@@ -361,6 +362,24 @@
             return Content(HttpStatusCode.OK, item);
         }
 
+        private IHttpActionResult TestarModelState(ModelStateDictionary ModelState)
+        {
+            StringBuilder mensagem_erro = new StringBuilder();
+
+            foreach (ModelState model in ModelState.Values)
+            {
+                if (model.Errors.Count > 0)
+                {
+                  mensagem_erro.AppendLine(model.Errors[0].ErrorMessage);
+                }
+            }
+
+            if (mensagem_erro.Length == 0)
+                mensagem_erro.AppendLine("Problemas de Validação!");
+
+            return Content(HttpStatusCode.Accepted, new { mensagem_erro = mensagem_erro.ToString() });
+        }
+
         // POST: api/T
         //[ResponseType(typeof(T))]
         //[ResponseType(typeof(void))]
@@ -392,7 +411,7 @@
 
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return TestarModelState(ModelState);
             }
 
             //var result = ValidarNovaEntidade(item);

@@ -40,8 +40,7 @@ var App;
              * Método de suporte do AngularJS. Não invocar diretamente.
              */
             /* @ngInject */
-            ApiProvider.prototype.$get = function ($http, $q, TratarErroDaApi, intercept, toaster) {
-                debugger;
+            ApiProvider.prototype.$get = function ($http, $q, TratarErroDaApi, intercept, toaster) {                
                 var _this = this;
                 return function (api) {
                     return new ApiService(_this.baseUrl + '/' + api, $http, $q, TratarErroDaApi, intercept, toaster);
@@ -249,8 +248,7 @@ var App;
             };
             return ApiService;
         })();
-
-        debugger;
+        
         Services.ApiService = ApiService;
         App.modules.Services.provider('api', ApiProvider);
         App.modules.Services.config(function ($httpProvider, apiProvider) {

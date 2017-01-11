@@ -26,10 +26,10 @@
         [Required]
         public int? COD_CADUNIDADE { get; set; }
         [Required]
-        public int? QUANTIDADE { get; set; }
+        public decimal? QUANTIDADE { get; set; }
         [Required]
-        public int VALOR_UNITARIO { get; set; }
-        public int? QUANTIDADE_TROCA { get; set; }
+        public decimal VALOR_UNITARIO { get; set; }
+        public decimal? QUANTIDADE_TROCA { get; set; }
 
         [NotMapped]
         public string PRODUTO { get; set; }
