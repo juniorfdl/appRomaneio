@@ -153,5 +153,23 @@
             return cli;
         }
 
+
+        [Route("api/fat_romaneio_pao/GetPreco")]
+        [HttpGet]
+        public dynamic GetPreco([FromUri]int PRODUTO = 0, DateTime? DATA = null, string CEMP = "0", int CONDICAO_PAGAMENTO = 0, int COD_CLIENTE = 0)            
+        {
+            string pdata = "01.01.2000";
+            if (DATA != null)
+            {
+                pdata = DATA.Value.ToUniversalTime().ToShortDateString();
+                pdata = pdata.Replace("/", ".");
+            }
+
+            var sql = new FuncoesBanco(db);
+            return sql.ExecSql(" SELECT PAVI FROM SP_LISTA_PRECO ("+PRODUTO
+                +", '"+ pdata + "', '"+CEMP+"', "+ CONDICAO_PAGAMENTO + ", "+COD_CLIENTE+") ");
+        }
+
+
     }
 }

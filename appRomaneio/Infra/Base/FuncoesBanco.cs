@@ -1,6 +1,5 @@
 ﻿namespace Infra.Base
 {
-    using FirebirdSql.Data.FirebirdClient;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -10,19 +9,25 @@
 
     public class FuncoesBanco
     {
-        private FbConnection db;
+        private Context db;
 
         public FuncoesBanco(Context db)
         {
-            this.db = (FbConnection) db.Database.Connection;
+            //this.db = (FbConnection) db.Database.Connection;
+            this.db = db;
+            
         }
 
-        public DataTable ExecSql(string sql)
+        public List<string> ExecSql(string sql)
         {
-            FbDataAdapter dados = new FbDataAdapter(sql, db);
-            DataTable dt = new DataTable();
-            dados.Fill(dt);
-            return dt;
+            //db.Database.SqlQuery
+
+            //FbDataAdapter dados = new FbDataAdapter(sql, db);
+            //DataTable dt = new DataTable();
+            //dados.Fill(dt);
+
+            return db.Database.SqlQuery<string>(sql).ToList();
+            
         }
 
         public int BuscarPKRegistro(string Generator)
@@ -41,12 +46,12 @@
             }
             xSql.AppendLine();
 
-            DataTable dt = ExecSql(xSql.ToString());
+            List<string> dt = ExecSql(xSql.ToString());
 
-            if (dt.Rows.Count > 0)
+            if (dt.Count > 0)
             {
-                DataRow row = dt.Rows[0];
-                codigo = Convert.ToInt32(row["INC"].ToString());
+                //DataRow row = dt.Rows[0];
+                codigo = Convert.ToInt32(dt[0].ToString());
             }
 
             return codigo;

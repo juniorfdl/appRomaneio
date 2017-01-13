@@ -79,7 +79,7 @@
                             <option value="T">Terceiros</option>
                         </select>
 
-                        <luar-text container-class="col-md-3" label="Nro O.C. Cliente" name="CODIGO_OC_CLIENTE" required ng-model="ctrl.currentRecord.CODIGO_OC_CLIENTE" ></luar-text>
+                        <luar-text container-class="col-md-3" label="Nro O.C. Cliente" name="CODIGO_OC_CLIENTE" ng-model="ctrl.currentRecord.CODIGO_OC_CLIENTE" ></luar-text>
                         <luar-text container-class="col-md-2" label="Pedido Cliente" name="COD_FATPEDIDO" readonly ng-model="ctrl.currentRecord.COD_FATPEDIDO" type="number"></luar-text>
                     </div>
 
@@ -90,7 +90,11 @@
                     Produtos
                 </tab-heading>
 
-                <button type="button" data-action="newRow" class="btn btn-primary btn-sm" ng-click="formitens.$setDirty(); ctrl.AddAlterItem(-1)"><b>+</b>Novo Item</button>
+                <button type="button" data-action="newRow" class="btn btn-primary btn-sm" 
+                        ng-click="formitens.$setDirty(); ctrl.AddAlterItem(-1)" 
+                        ng-disabled="ctrl.mainForm.$invalid" >
+                    <b>+</b>Novo Item
+                </button>
                 <table class="table" ng-form="formitens">
                     <thead>
                         <tr>

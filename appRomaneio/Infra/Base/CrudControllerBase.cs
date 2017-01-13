@@ -379,7 +379,10 @@
             {
                 if (model.Errors.Count > 0)
                 {
-                  mensagem_erro.AppendLine(model.Errors[0].ErrorMessage);
+                    if (model.Errors[0].ErrorMessage != "")
+                        mensagem_erro.AppendLine(model.Errors[0].ErrorMessage);
+                    else if (model.Errors[0].Exception.Message != "")
+                        mensagem_erro.AppendLine(model.Errors[0].Exception.Message);
                 }
             }
 
@@ -412,7 +415,6 @@
                 catch
                 {
                     return Content(HttpStatusCode.Accepted, new { mensagem_erro = "Problema com generator da tabela " + item.GetType().Name });
-                    //throw new InvalidOperationException(string.Format("Problema com generator da tabela " + item.GetType().Name));
                 }
             }
 

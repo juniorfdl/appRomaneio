@@ -97,7 +97,6 @@ var App;
             };
 
             ApiService.prototype.allLook = function (params, look) {
-                debugger;
                 return this.fetch(this.apibase +'/'+ look, params);
             };
             /**
@@ -115,7 +114,6 @@ var App;
             ApiService.prototype.get = function (id) {
                 return this.$http.get(this.api + '/' + id).then(function (response)
                 {
-                    debugger;
                     return response.data;
                 });
             };
@@ -168,7 +166,6 @@ var App;
              * @returns         Promise para o registro atualizado.
              */
             ApiService.prototype.save = function (entity) {
-                //debugger;
                 var _this = this;
                 var url = this.api + (entity.id ? '/' + entity.id : '');
                 var method = entity.id ? 'PUT' : 'POST';
@@ -182,7 +179,6 @@ var App;
                     url: url,
                     data: entity
                 }).then(function (response) {
-                    debugger;
                     var payload = (response.data || {});
                     payload.$status = response.status;
 
@@ -240,7 +236,6 @@ var App;
              * @param id    Identificar do registro, conforme indicado por [[ApiEntity.id]].
              */
             ApiService.prototype.delete = function (id) {
-                debugger;
                 var _this = this;
                 return this.$http.delete(this.api + '/' + id)
                     .catch(function (data) { return _this.$q.reject(_this.TratarErroDaApi(data)); })

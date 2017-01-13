@@ -40,7 +40,8 @@ namespace appRomaneio
                 "~/scripts/Base/crudServices.js",
                 "~/scripts/Base/crudHttpRedirect.js",
                 "~/scripts/Base/directives.js",
-                "~/scripts/Base/config.js",
+                "~/scripts/SIS/config.js",
+                "~/scripts/SIS/states.js",
                 "~/scripts/Base/api.js",
 
                 "~/scripts/Base/app.js",

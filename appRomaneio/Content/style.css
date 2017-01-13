@@ -11,7 +11,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center
+    align-items: center;
     background: #bcc3ca;
 }
 
@@ -194,7 +194,7 @@ div[required] .control-label::before {
 
 @media only screen and (max-device-width : 480px) {
     .modal-body, .modal-content fieldset, .modal-content .container {
-        padding: 0 !important;
+        /*padding: 0 !important;*/
     }
 }
 

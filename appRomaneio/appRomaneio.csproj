@@ -223,7 +223,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infra\Base\Context.cs" />
+    <Compile Include="Context\Context.cs" />
     <Compile Include="Infra\Base\ControllerBase.cs" />
     <Compile Include="Infra\Base\CrudControllerBase.cs" />
     <Compile Include="Infra\Base\ExceptionAttribute.cs" />
@@ -328,7 +328,7 @@
     <Content Include="Scripts\Base\base.js" />
     <Content Include="Scripts\Base\basics.js" />
     <Content Include="Scripts\Base\common.js" />
-    <Content Include="Scripts\Base\config.js" />
+    <Content Include="Scripts\SIS\config.js" />
     <Content Include="Scripts\Base\ConstConf.js" />
     <Content Include="Scripts\Base\crud.js" />
     <Content Include="Scripts\Base\crudHttpRedirect.js" />
@@ -377,6 +377,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\SIS\states.js" />
     <Content Include="Views\404.html" />
     <Content Include="Views\error-messages.html" />
     <Content Include="Views\header1.html" />
