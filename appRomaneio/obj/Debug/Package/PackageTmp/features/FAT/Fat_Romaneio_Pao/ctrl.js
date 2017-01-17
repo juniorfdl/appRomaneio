@@ -38,36 +38,33 @@ var App;
                 _this.data = [];
                 _this.selectedItem = null;
                 _this.searchText = null;
-                _this.querySearch = querySearch;
                 _this.selectedItemChange = selectedItemChange;
                 _this.removeItens = removeItens;
                 _this.AddAlterItem = AddAlterItem;
 
                 function selectedItemChange(item) {
-                    if (item == null) {
-                        _this.currentRecord.CLIENTE_CODIGO = null;
-                        _this.currentRecord.CLIENTE_NOME = null;
-                        _this.currentRecord.COD_CADCOLABORADOR = null;
-                    } else {
-                        _this.currentRecord.CLIENTE_CODIGO = item.CODIGO;
-                        _this.currentRecord.CLIENTE_NOME = item.FANTASIA;
-                        _this.currentRecord.COD_CADCOLABORADOR = item.id;
+
+                    if (_this.currentRecord != null) {
+                        if (item == null) {
+                            _this.currentRecord.CLIENTE_CODIGO = null;
+                            _this.currentRecord.CLIENTE_NOME = null;
+                            _this.currentRecord.COD_CADCOLABORADOR = null;
+                        } else {
+                            _this.currentRecord.CLIENTE_CODIGO = item.CODIGO;
+                            _this.currentRecord.CLIENTE_NOME = item.FANTASIA;
+                            _this.currentRecord.COD_CADCOLABORADOR = item.id;
+                        }
                     }
                 }
 
-                function querySearch(query) {
+                this.querySearch = function (query) {
 
-                    _this.crudSvc.ClientesLook(query).then(function (lista) {
-                        _this.data = lista;
-                    });
-
-                    var deferred = $q.defer();
-                    $timeout(function () {
-                        deferred.resolve(_this.data);
-                    }, Math.random() * 500, false);
-                    return deferred.promise;
+                    //if (query != this.currentRecord.CLIENTE_NOME) {
+                    return _this.crudSvc.ClientesLook(query).then(function (response) {
+                         return response;
+                     })                    
                 }
-
+                
                 function CondPagamentoLook() {
                     _this.crudSvc.CondPagamentoLook().then(function (lista) {
                         _this.CondPagamentoLook = lista;
@@ -78,7 +75,7 @@ var App;
                     _this.crudSvc.OperacaoSaidaLook().then(function (lista) {
                         _this.OperacaoSaidaLook = lista;
                     });
-                }               
+                }
 
                 function TransportadoraLook() {
                     _this.crudSvc.TransportadoraLook().then(function (lista) {
@@ -93,7 +90,6 @@ var App;
                 }
 
                 function removeItens(posicao, SweetAlert) {
-                    debugger;
                     var _this = this;
                     SweetAlert.swal({
                         title: "Excluir este registro?",
@@ -109,7 +105,7 @@ var App;
                     });
                 }
 
-                function AddAlterItem(item) {                    
+                function AddAlterItem(item) {
                     if (item == -1) {
                         _this.ItemSelecionado = null;
 
@@ -129,10 +125,11 @@ var App;
                         controller: 'ModalInstanceCtrl',
                         controllerAs: 'Ctrl'
                     });
-                }                
+                }
+
             }
-            
-            CrudRomaneioCtrl.prototype.prepararParaSalvar = function () {                
+
+            CrudRomaneioCtrl.prototype.prepararParaSalvar = function () {
                 this.currentRecord.CFIL = '01';
                 this.currentRecord.CEMP = this.$rootScope.currentUser.userCEMP;
             };
@@ -140,8 +137,8 @@ var App;
             CrudRomaneioCtrl.prototype.crud = function () {
                 return "FAT_ROMANEIO_PAO";
             };
-
-            CrudRomaneioCtrl.prototype.registroAtualizado = function () {                
+        
+            CrudRomaneioCtrl.prototype.registroAtualizado = function () {
                 if (this.currentRecord != null) {
                     this.data = [{ FANTASIA: this.currentRecord.CLIENTE_NOME }];
                     this.searchText = this.currentRecord.CLIENTE_NOME;
@@ -149,18 +146,20 @@ var App;
                     if (this.currentRecord.id == null) {
                         this.currentRecord.VENDEDOR = localStorage.getItem("VENDEDOR");
                         this.currentRecord.COD_CADVENDEDOR = localStorage.getItem("COD_CADVENDEDOR");
+                        this.currentRecord.TIPO_FRETE = "C";
                     }
-                }                
-            }            
-
+                }
+            }
+                 
             return CrudRomaneioCtrl;
         })(Controllers.CrudBaseEditCtrl);
         Controllers.CrudRomaneioCtrl = CrudRomaneioCtrl;
 
         var ModalInstanceCtrl = function ($scope, $modalInstance, $q, $timeout) {
-            
+
             $scope.ItemSelecionado = $scope.$parent.ctrl.ItemSelecionado;
             $scope.OperacaoSaidaLook = $scope.$parent.ctrl.OperacaoSaidaLook;
+            var currentRecord = $scope.$parent.ctrl.currentRecord;
 
             var Novo = $scope.ItemSelecionado == null;
 
@@ -168,35 +167,24 @@ var App;
             $scope.querySearchProduto = querySearchProduto;
             $scope.selectedItemChangeProduto = selectedItemChangeProduto;
 
-            if (Novo) {                
+            if (Novo) {
                 $scope.dataProduto = [];
                 $scope.searchTextProduto = null;
                 $scope.ItemSelecionado = {};
                 $scope.ItemSelecionado.ITEM = $scope.$parent.ctrl.ProximoItem;
-            }   
-            else
-            {
+            }
+            else {
                 $scope.dataProduto = [{ NOME: $scope.ItemSelecionado.PRODUTO }];
-                $scope.searchTextProduto = $scope.ItemSelecionado.PRODUTO;             
-            }                        
+                $scope.searchTextProduto = $scope.ItemSelecionado.PRODUTO;
+            }            
 
-            function querySearchProduto(query) {
-
-                debugger;
-
-                $scope.$parent.ctrl.crudSvc.ProdutosLook(query).then(function (lista) {
-                    $scope.dataProduto = lista;
-                });
-
-                var deferred = $q.defer();
-                $timeout(function () {
-                    deferred.resolve($scope.dataProduto);
-                }, Math.random() * 500, false);
-                return deferred.promise;
+            function querySearchProduto (query) {
+                return $scope.$parent.ctrl.crudSvc.ProdutosLook(query).then(function (response) {
+                    return response;
+                })
             }
 
             function selectedItemChangeProduto(item) {
-                debugger;
                 if (item == null) {
                     $scope.ItemSelecionado.COD_CADPRODUTO = null;
                     $scope.ItemSelecionado.PRODUTO = null;
@@ -205,13 +193,26 @@ var App;
                 } else {
                     $scope.ItemSelecionado.COD_CADPRODUTO = item.id;
                     $scope.ItemSelecionado.PRODUTO = item.NOME;
-                    $scope.ItemSelecionado.COD_CADUNIDADE = item.COD_CADUNIDADE
+                    $scope.ItemSelecionado.COD_CADUNIDADE = item.COD_CADUNIDADE;
+
+                    if (item.CODIGO != null) {
+                        GetPreco(item.CODIGO,
+                        currentRecord.DATA_EMISSAO,
+                        $scope.$parent.$root.currentUser.userCEMP,
+                        currentRecord.COD_CADCONDPAGAMENTO,
+                        currentRecord.CLIENTE_CODIGO);
+                    }
                 }
             }
-            
+
+            function GetPreco(PRODUTO, DATA, CEMP, CONDICAO_PAGAMENTO, COD_CLIENTE) {
+                $scope.$parent.ctrl.crudSvc.GetPreco(PRODUTO, DATA, CEMP, CONDICAO_PAGAMENTO, COD_CLIENTE)
+                    .then(function (dadospreco) {
+                        $scope.ItemSelecionado.VALOR_UNITARIO = dadospreco;
+                    });
+            }
 
             $scope.ok = function () {
-                debugger;
 
                 if (Novo) {
                     $scope.$parent.ctrl.currentRecord.Itens.push($scope.ItemSelecionado);

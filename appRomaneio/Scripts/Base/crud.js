@@ -115,7 +115,7 @@ var App;
             return CrudBaseCtrl;
         })();
         Controllers.CrudBaseCtrl = CrudBaseCtrl;
-     
+
         var CrudBaseEditCtrl = (function (_super) {
             __extends(CrudBaseEditCtrl, _super);
             function CrudBaseEditCtrl() {
@@ -266,7 +266,7 @@ var App;
 
                     this.NovoRegistro = (_this.currentRecord.id == null);
 
-                    var result = this.internalSalvar();                    
+                    var result = this.internalSalvar();
                 }
             };
             CrudBaseEditCtrl.prototype.tratarErros = function (form, erros) {
@@ -380,32 +380,35 @@ var App;
             CrudBaseEditCtrl.prototype.excluir = function (item) {
                 var _this = this;
                 var confirmarFn = function () {
-             
+
                     if (item == null) {
                         item = _this.currentRecord;
                     }
 
-                    _this.crudSvc.excluir(item).then(function () {
-                        var index = _this.lista.indexOf(item);
-                        if (index >= 0) {
-                            _this.lista.splice(index, 1);
-                            _this.currentRecord = null;                            
-                        }
-                        else {
+                    _this.crudSvc.excluir(item).then(function (response) {
+                        if (response.status != 201 && response.data.mensagem_erro != null) {
+                            _this.toaster.error("Atenção", response.data.mensagem_erro);
+                        } else {
+                            var index = _this.lista.indexOf(item);
+                            if (index >= 0) {
+                                _this.lista.splice(index, 1);
+                                _this.currentRecord = null;
+                            }
+                            else {
 
-                            var i;
-                            for (i = 0; i < _this.lista.length - 1; i++) {
+                                var i;
+                                for (i = 0; i < _this.lista.length - 1; i++) {
 
-                                if (_this.lista[i].id = item.id) {
-                                    _this.lista.splice(_this.lista[i], 1);
-                                    break;
+                                    if (_this.lista[i].id = item.id) {
+                                        _this.lista.splice(_this.lista[i], 1);
+                                        break;
+                                    }
                                 }
                             }
+
+                            _this.$rootScope.Cadastro = false;
+                            _this.toaster.warning("Atenção", "Registro excluido com sucesso!");
                         }
-
-                        _this.$rootScope.Cadastro = false;
-                        _this.toaster.warning("Atenção", "Registro excluido com sucesso!");                        
-
                     }).catch(function (erros) { return _this.toaster.warning("Atenção", erros[0]); });
                 };
                 this.confirmarExclusao(confirmarFn);

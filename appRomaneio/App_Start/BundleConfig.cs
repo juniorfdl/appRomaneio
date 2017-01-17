@@ -32,7 +32,7 @@ namespace appRomaneio
 
             bundles.Add(new ScriptBundle("~/js/app").Include(
                 "~/scripts/Base/sweetalert.min.js",
-                "~/scripts/Base/basics.js",
+                "~/scripts/Base/basics.js",                
                 "~/scripts/Base/ngCpfCnpj.js",
                 "~/scripts/Base/errors.js",
                 "~/scripts/Base/apiInterceptor.js",
@@ -43,10 +43,8 @@ namespace appRomaneio
                 "~/scripts/SIS/config.js",
                 "~/scripts/SIS/states.js",
                 "~/scripts/Base/api.js",
-
                 "~/scripts/Base/app.js",
                 "~/scripts/Base/security.js",
-
                 "~/scripts/Base/backButton.js",
                 "~/scripts/Base/formFields.js",
                 "~/scripts/Base/layoutCrud.js",

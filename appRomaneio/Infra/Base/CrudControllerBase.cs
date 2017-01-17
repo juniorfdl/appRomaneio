@@ -110,6 +110,11 @@
         {
         }
 
+        protected virtual string ValidarEntidade(T item)
+        {
+            return null;
+        }
+
         protected virtual void BeforeReturn(T item)
         {
             //if (typeof(IRaizDeAgregacao).IsAssignableFrom(typeof(T)))
@@ -204,7 +209,7 @@
             if (item == null)
             {
                 return NotFound();
-            }
+            }            
 
             BeforeReturn(item);
             return Ok(item);
@@ -296,6 +301,12 @@
             //{
             //return BadRequest();
             //}
+
+            var result = ValidarEntidade(item);
+            if (result != null)
+            {
+                return Content(HttpStatusCode.Accepted, new { mensagem_erro = result });
+            }
 
             var objetos = EncontrarObjetos(item);
 
@@ -425,11 +436,11 @@
                 return TestarModelState(ModelState);
             }
 
-            //var result = ValidarNovaEntidade(item);
-            //if (result != null)
-            //{
-            //    return result;
-            //}
+            var result = ValidarEntidade(item);
+            if (result != null)
+            {
+                return Content(HttpStatusCode.Accepted, new { mensagem_erro = result });                
+            }
 
             db.Set<T>().Add(item);
 
@@ -497,29 +508,7 @@
                     }
                 }
             }
-        }
-
-        private IHttpActionResult ValidarNovaEntidade(IEntidadeBase item)
-        {
-            if (item.id != 0)
-                return BadRequest();
-
-            var colecoes = new Dictionary<PropertyInfo, IEnumerable<IEntidadeBase>>();
-            foreach (var prop in item.GetType().GetProperties().Where(pi => typeof(IEnumerable<IEntidadeBase>).IsAssignableFrom(pi.PropertyType)))
-            {
-                colecoes[prop] = prop.GetValue(item) as IEnumerable<IEntidadeBase>;
-            }
-            foreach (var salvo in colecoes)
-            {
-                foreach (var subItem in salvo.Value)
-                {
-                    var result = ValidarNovaEntidade(subItem);
-                    if (result != null) return result;
-                }
-            }
-
-            return null;
-        }
+        }        
 
         // DELETE: api/T/5
         //[ResponseType(typeof(T))]
@@ -529,6 +518,12 @@
             if (item == null)
             {
                 return NotFound();
+            }
+
+            var result = ValidarEntidade(item);
+            if (result != null)
+            {
+                return Content(HttpStatusCode.Accepted, new { mensagem_erro = result });
             }
 
             db.Set<T>().Remove(item);

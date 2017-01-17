@@ -21,7 +21,7 @@
                         <luar-text container-class="col-md-2" label="Código" name="codigo" readonly ng-model="ctrl.currentRecord.CODIGO"></luar-text>
                         <luar-text container-class="col-md-2" label="Data Emissão" name="DATA_EMISSAO" type="date" required ng-model="ctrl.currentRecord.DATA_EMISSAO" wt-iso-date></luar-text>
                         <luar-text container-class="col-md-2" label="Data Entrega" name="DATA_ENTREGA" type="date" required ng-model="ctrl.currentRecord.DATA_ENTREGA" wt-iso-date></luar-text>
-                        
+
                     </div>
 
                     <div class="row">
@@ -29,17 +29,33 @@
                                    name="CLIENTE_CODIGO" required style="display:none" ng-model="ctrl.currentRecord.CLIENTE_CODIGO">
                         </luar-text>
                         <div class="col-md-12 ng-scope" name="cliente">
-                            <md-autocomplete md-selected-item="ctrl.selectedItem"
+                            <!--<md-autocomplete md-selected-item="ctrl.selectedItem"
                                              md-search-text-change="ctrl.querySearch(ctrl.searchText)"
                                              md-search-text="ctrl.searchText"
                                              md-selected-item-change="ctrl.selectedItemChange(item)"
                                              md-items="item in ctrl.data"
                                              md-item-text="item.FANTASIA" md-min-length="2"
                                              md-autoselect="true"
+                                             md-delay="300"
                                              placeholder="Pesquisar Cliente">
                                 <md-item-template>
                                     <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.FANTASIA}}</span>
                                 </md-item-template>
+                            </md-autocomplete>-->
+
+                            <md-autocomplete flex
+                                             md-selected-item="ctrl.selectedItem"
+                                             md-search-text="ctrl.searchText"
+                                             md-selected-item-change="ctrl.selectedItemChange(item)"
+                                             md-items="item in ctrl.querySearch(ctrl.searchText)"
+                                             md-item-text="item.FANTASIA"
+                                             md-delay="300"
+                                             md-min-length="2"
+                                             md-floating-label="Pesquisar Clientes">
+                                <div layout="row" class="item" layout-align="start center">                                    
+                                    <span md-highlight-text="ctrl.searchText">{{item.FANTASIA}}</span>
+                                    <label> &nbsp; - ({{item.CODIGO}})</label>
+                                </div>
                             </md-autocomplete>
                         </div>
                     </div>
@@ -53,7 +69,7 @@
                         <luar-text container-class="col-md-6" label="Vendedor" readonly required name="VENDEDOR"
                                    ng-model="ctrl.currentRecord.VENDEDOR">
                         </luar-text>
-                        
+
                     </div>
 
                     <div class="row">
@@ -79,7 +95,7 @@
                             <option value="T">Terceiros</option>
                         </select>
 
-                        <luar-text container-class="col-md-3" label="Nro O.C. Cliente" name="CODIGO_OC_CLIENTE" required ng-model="ctrl.currentRecord.CODIGO_OC_CLIENTE" ></luar-text>
+                        <luar-text container-class="col-md-3" label="Nro O.C. Cliente" name="CODIGO_OC_CLIENTE" ng-model="ctrl.currentRecord.CODIGO_OC_CLIENTE"></luar-text>
                         <luar-text container-class="col-md-2" label="Pedido Cliente" name="COD_FATPEDIDO" readonly ng-model="ctrl.currentRecord.COD_FATPEDIDO" type="number"></luar-text>
                     </div>
 
@@ -90,7 +106,11 @@
                     Produtos
                 </tab-heading>
 
-                <button type="button" data-action="newRow" class="btn btn-primary btn-sm" ng-click="formitens.$setDirty(); ctrl.AddAlterItem(-1)"><b>+</b>Novo Item</button>
+                <button type="button" data-action="newRow" class="btn btn-primary btn-sm"
+                        ng-click="formitens.$setDirty(); ctrl.AddAlterItem(-1)"
+                        ng-disabled="ctrl.mainForm.$invalid">
+                    <b>+</b>Novo Item
+                </button>
                 <table class="table" ng-form="formitens">
                     <thead>
                         <tr>
@@ -144,21 +164,15 @@
             <fieldset>
                 <div class="row">
                     <luar-text container-class="col-md-2" label="Item" name="ITEM" readonly ng-model="ItemSelecionado.ITEM"></luar-text>
-                </div>
-                <!--<div class="row">
-                    <luar-select container-class="col-md-12" label="Operação de Saida" name="COD_FATOPERACAOSAIDA" required
-                                 ng-options="item.id as item.NOME for item in ::OperacaoSaidaLook"
-                                 ng-model="ItemSelecionado.COD_FATOPERACAOSAIDA">
-                    </luar-select>
-                </div>-->
+                </div>                
 
                 <div class="row">
                     <luar-text container-class="col-md-2" label="Produto" name="COD_CADPRODUTO" required style="display:none" ng-model="ItemSelecionado.COD_CADPRODUTO"></luar-text>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 ng-scope" name="produto">                        
-                        <md-autocomplete md-selected-item="selectedItemProduto"
+                    <div class="col-md-12 ng-scope" name="produto">
+                        <!--<md-autocomplete md-selected-item="selectedItemProduto"
                                          md-search-text-change="querySearchProduto(searchTextProduto)"
                                          md-search-text="searchTextProduto"
                                          md-selected-item-change="selectedItemChangeProduto(item)"
@@ -169,7 +183,26 @@
                             <md-item-template>
                                 <span md-highlight-text="searchTextProduto" md-highlight-flags="^i">{{item.NOME}}</span>
                             </md-item-template>
+                        </md-autocomplete>-->
+
+
+                        <md-autocomplete flex
+                                         md-selected-item="selectedItemProduto"
+                                         md-search-text="searchTextProduto"
+                                         md-selected-item-change="selectedItemChangeProduto(item)"
+                                         md-items="item in querySearchProduto(searchTextProduto)"
+                                         md-item-text="item.NOME"
+                                         md-delay="300"
+                                         md-min-length="2"
+                                         placeholder="Pesquisar Produto">
+                            <div layout="row" class="item" layout-align="start center">
+                                <span md-highlight-text="searchTextProduto">{{item.NOME}}</span>                                
+                                
+                                <label> &nbsp; - ({{item.CODIGO}})</label>
+                                
+                            </div>
                         </md-autocomplete>
+
                     </div>
                 </div>
 

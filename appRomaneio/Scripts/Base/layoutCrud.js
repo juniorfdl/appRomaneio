@@ -37,8 +37,8 @@ var App;
                     var crudId = crudCtrl.crud.crud();
                     crudCtrl.podeVisualizar = true;//PermissoesService.temPermissao(crudId, 'visualizar');
                     crudCtrl.podeIncluir = true; //PermissoesService.temPermissao(crudId, 'incluir');
-                    crudCtrl.podeEditar = true; //PermissoesService.temPermissao(crudId, 'editar');
-                    crudCtrl.podeSalvar = true; //PermissoesService.temPermissao(crudId, 'incluir', 'editar') && crudCtrl.crud.overridePodeEditar() !== false;
+                    crudCtrl.podeEditar = true;//PermissoesService.temPermissao(crudId, 'editar');
+                    crudCtrl.podeSalvar = crudCtrl.crud.overridePodeEditar() !== false;
                     crudCtrl.podeExcluir = true; //PermissoesService.temPermissao(crudId, 'excluir') && crudCtrl.crud.overridePodeExcluir() !== false;
                     crudCtrl.crud.permissoes = crudCtrl;
 

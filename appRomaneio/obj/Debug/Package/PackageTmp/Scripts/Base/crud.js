@@ -83,7 +83,6 @@ var App;
              * @param confirmarFn   Callback que será chamada quando usuário confirmar a exclusão.
              */
             CrudBaseCtrl.prototype.confirmarExclusao = function (confirmarFn) {
-                debugger;
                 this.SweetAlert.swal({
                     title: "Excluir este registro?",
                     type: "warning",
@@ -111,17 +110,15 @@ var App;
              * @virtual
              */
             CrudBaseCtrl.prototype.overridePodeExcluir = function () {
-                debugger;
                 return undefined;
             };
             return CrudBaseCtrl;
         })();
         Controllers.CrudBaseCtrl = CrudBaseCtrl;
-     
+
         var CrudBaseEditCtrl = (function (_super) {
             __extends(CrudBaseEditCtrl, _super);
             function CrudBaseEditCtrl() {
-                debugger;
                 _super.call(this);
                 this.mensagens = new App.Services.Mensagens();
                 this.changeOnBlur = { updateOn: 'blur' };
@@ -172,7 +169,6 @@ var App;
                     return this._currentRecord;
                 },
                 set: function (value) {
-                    debugger;
                     this._currentRecord = value;
                     this.registroAtualizado();
                 },
@@ -237,7 +233,6 @@ var App;
             };
             CrudBaseEditCtrl.prototype.registroAtualizado = function () { };
             CrudBaseEditCtrl.prototype.internalSalvar = function () {
-                debugger;
                 var _this = this;
                 if (this.mainForm.$pristine)
                     return null;
@@ -245,7 +240,6 @@ var App;
                 return this.$q.when(promise).then(function (result) {
                     return _this.crudSvc.salvar(_this.currentRecord)
                         .then(function (result) {
-                            debugger;
                             // resetar status do form para evitar validação de dirty ao navegar para outra página 
                             if (result != null) {
                                 _this.mainForm.$setPristine();
@@ -272,11 +266,10 @@ var App;
 
                     this.NovoRegistro = (_this.currentRecord.id == null);
 
-                    var result = this.internalSalvar();                    
+                    var result = this.internalSalvar();
                 }
             };
             CrudBaseEditCtrl.prototype.tratarErros = function (form, erros) {
-                debugger;
                 var _this = this;
                 this.mensagens.remover('API');
                 // http://webaim.org/techniques/formvalidation/
@@ -358,7 +351,6 @@ var App;
             });
 
             CrudBaseEditCtrl.prototype.buscar = function (termo, campo) {
-                debugger;
                 var _this = this;
                 if (termo === undefined)
                     termo = this.ultimoTermo;
@@ -379,9 +371,6 @@ var App;
                     .buscar(termo, this.paginaAtual, this._campoOrdenacao, this._direcaoAsc, this.luarApp.ITENS_POR_PAGINA, campo)
                     .then(function (lista) {
                         _this.lista = lista;
-
-                        debugger;
-
                         _this.mainForm.$setPristine();
                         _this.mainForm.$setUntouched();
 
@@ -391,33 +380,35 @@ var App;
             CrudBaseEditCtrl.prototype.excluir = function (item) {
                 var _this = this;
                 var confirmarFn = function () {
-                    debugger;
 
                     if (item == null) {
                         item = _this.currentRecord;
                     }
 
-                    _this.crudSvc.excluir(item).then(function () {
-                        var index = _this.lista.indexOf(item);
-                        if (index >= 0) {
-                            _this.lista.splice(index, 1);
-                            _this.currentRecord = null;                            
-                        }
-                        else {
+                    _this.crudSvc.excluir(item).then(function (response) {
+                        if (response.status != 201 && response.data.mensagem_erro != null) {
+                            _this.toaster.error("Atenção", response.data.mensagem_erro);
+                        } else {
+                            var index = _this.lista.indexOf(item);
+                            if (index >= 0) {
+                                _this.lista.splice(index, 1);
+                                _this.currentRecord = null;
+                            }
+                            else {
 
-                            var i;
-                            for (i = 0; i < _this.lista.length - 1; i++) {
+                                var i;
+                                for (i = 0; i < _this.lista.length - 1; i++) {
 
-                                if (_this.lista[i].id = item.id) {
-                                    _this.lista.splice(_this.lista[i], 1);
-                                    break;
+                                    if (_this.lista[i].id = item.id) {
+                                        _this.lista.splice(_this.lista[i], 1);
+                                        break;
+                                    }
                                 }
                             }
+
+                            _this.$rootScope.Cadastro = false;
+                            _this.toaster.warning("Atenção", "Registro excluido com sucesso!");
                         }
-
-                        _this.$rootScope.Cadastro = false;
-                        _this.toaster.warning("Atenção", "Registro excluido com sucesso!");                        
-
                     }).catch(function (erros) { return _this.toaster.warning("Atenção", erros[0]); });
                 };
                 this.confirmarExclusao(confirmarFn);

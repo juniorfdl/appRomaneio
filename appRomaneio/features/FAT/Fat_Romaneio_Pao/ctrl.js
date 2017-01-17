@@ -38,36 +38,33 @@ var App;
                 _this.data = [];
                 _this.selectedItem = null;
                 _this.searchText = null;
-                _this.querySearch = querySearch;
                 _this.selectedItemChange = selectedItemChange;
                 _this.removeItens = removeItens;
                 _this.AddAlterItem = AddAlterItem;
 
                 function selectedItemChange(item) {
-                    if (item == null) {
-                        _this.currentRecord.CLIENTE_CODIGO = null;
-                        _this.currentRecord.CLIENTE_NOME = null;
-                        _this.currentRecord.COD_CADCOLABORADOR = null;
-                    } else {
-                        _this.currentRecord.CLIENTE_CODIGO = item.CODIGO;
-                        _this.currentRecord.CLIENTE_NOME = item.FANTASIA;
-                        _this.currentRecord.COD_CADCOLABORADOR = item.id;
+
+                    if (_this.currentRecord != null) {
+                        if (item == null) {
+                            _this.currentRecord.CLIENTE_CODIGO = null;
+                            _this.currentRecord.CLIENTE_NOME = null;
+                            _this.currentRecord.COD_CADCOLABORADOR = null;
+                        } else {
+                            _this.currentRecord.CLIENTE_CODIGO = item.CODIGO;
+                            _this.currentRecord.CLIENTE_NOME = item.FANTASIA;
+                            _this.currentRecord.COD_CADCOLABORADOR = item.id;
+                        }
                     }
                 }
 
-                function querySearch(query) {
+                this.querySearch = function (query) {
 
-                    _this.crudSvc.ClientesLook(query).then(function (lista) {
-                        _this.data = lista;
-                    });
-
-                    var deferred = $q.defer();
-                    $timeout(function () {
-                        deferred.resolve(_this.data);
-                    }, Math.random() * 500, false);
-                    return deferred.promise;
+                    //if (query != this.currentRecord.CLIENTE_NOME) {
+                    return _this.crudSvc.ClientesLook(query).then(function (response) {
+                         return response;
+                     })                    
                 }
-
+                
                 function CondPagamentoLook() {
                     _this.crudSvc.CondPagamentoLook().then(function (lista) {
                         _this.CondPagamentoLook = lista;
@@ -140,7 +137,7 @@ var App;
             CrudRomaneioCtrl.prototype.crud = function () {
                 return "FAT_ROMANEIO_PAO";
             };
-
+        
             CrudRomaneioCtrl.prototype.registroAtualizado = function () {
                 if (this.currentRecord != null) {
                     this.data = [{ FANTASIA: this.currentRecord.CLIENTE_NOME }];
@@ -153,7 +150,7 @@ var App;
                     }
                 }
             }
-
+                 
             return CrudRomaneioCtrl;
         })(Controllers.CrudBaseEditCtrl);
         Controllers.CrudRomaneioCtrl = CrudRomaneioCtrl;
@@ -179,22 +176,15 @@ var App;
             else {
                 $scope.dataProduto = [{ NOME: $scope.ItemSelecionado.PRODUTO }];
                 $scope.searchTextProduto = $scope.ItemSelecionado.PRODUTO;
+            }            
+
+            function querySearchProduto (query) {
+                return $scope.$parent.ctrl.crudSvc.ProdutosLook(query).then(function (response) {
+                    return response;
+                })
             }
 
-            function querySearchProduto(query) {
-
-                $scope.$parent.ctrl.crudSvc.ProdutosLook(query).then(function (lista) {
-                    $scope.dataProduto = lista;
-                });
-
-                var deferred = $q.defer();
-                $timeout(function () {
-                    deferred.resolve($scope.dataProduto);
-                }, Math.random() * 500, false);
-                return deferred.promise;
-            }
-
-            function selectedItemChangeProduto(item) {                
+            function selectedItemChangeProduto(item) {
                 if (item == null) {
                     $scope.ItemSelecionado.COD_CADPRODUTO = null;
                     $scope.ItemSelecionado.PRODUTO = null;
@@ -218,9 +208,7 @@ var App;
             function GetPreco(PRODUTO, DATA, CEMP, CONDICAO_PAGAMENTO, COD_CLIENTE) {
                 $scope.$parent.ctrl.crudSvc.GetPreco(PRODUTO, DATA, CEMP, CONDICAO_PAGAMENTO, COD_CLIENTE)
                     .then(function (dadospreco) {
-                        debugger;
-                        if (dadospreco.length > 0)
-                            $scope.ItemSelecionado.VALOR_UNITARIO = parseFloat(dadospreco[0].replace(',','.'));
+                        $scope.ItemSelecionado.VALOR_UNITARIO = dadospreco;
                     });
             }
 

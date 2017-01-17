@@ -13,7 +13,6 @@ var App;
 
             /* @ngInject */
             function CrudBaseService($q, api, $rootScope) {
-                debugger;
                 this.$q = $q;
                 this.api = api(this.baseEntity); 
                 this.cache = {};
@@ -78,7 +77,6 @@ var App;
              * @returns                 Promise para a lista de registros.
              */
             CrudBaseService.prototype.buscar = function (termoDePesquisa, pagina, campoOrdenacao, direcaoAsc, itensPorPagina, campoPesquisa) {
-                debugger;
                 var _this = this;
 
                 if (termoDePesquisa === void 0) { termoDePesquisa = ''; }
@@ -156,12 +154,10 @@ var App;
              * @returns     Promise para o registro retornado.
              */
             CrudBaseService.prototype.buscarPorId = function (id) {
-                debugger;
                 return this.api.get(id);
             };
 
             CrudBaseService.prototype.buscarConsultaPorId = function (id) {
-                debugger;    
                 if (this.apiConsulta != null)
                     return this.apiConsulta.get(id);
                 else
@@ -175,7 +171,6 @@ var App;
              * @returns     Promise para o registro retornado.
              */
             CrudBaseService.prototype.resolver = function (id) {
-                debugger;
                 return id ? this.buscarPorId(id) : this.criarVazio();
             };
             /**
@@ -191,8 +186,7 @@ var App;
              * @returns         Promise para o registro atualizado.
              */
             CrudBaseService.prototype.salvar = function (entity) {
-                debugger;
-
+           
                 if (this.$rootScope != null) {
                     if (entity.CEMP == null || entity.CEMP == "") {
                         entity.CEMP = this.$rootScope.currentUser.userCEMP;

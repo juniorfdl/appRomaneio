@@ -34,8 +34,19 @@
         }
 
         protected override void ExecutarAntesPost(FAT_ROMANEIO_PAO item)
-        {
+        {        
+
             item.CODIGO = db.Set<FAT_ROMANEIO_PAO>().Max(m => m.CODIGO) + 1;
+        }
+
+        protected override string ValidarEntidade(FAT_ROMANEIO_PAO item)
+        {
+            if (item.COD_FATPEDIDO > 0)
+            {
+                return "Pedido já foi realizado";
+            }
+            else
+                return null;
         }
 
         protected override IQueryable<FAT_ROMANEIO_PAO> TrazerDadosParaLista(IQueryable<FAT_ROMANEIO_PAO> query)
@@ -165,9 +176,25 @@
                 pdata = pdata.Replace("/", ".");
             }
 
+            double PAVI = 0;
             var sql = new FuncoesBanco(db);
-            return sql.ExecSql(" SELECT PAVI FROM SP_LISTA_PRECO ("+PRODUTO
-                +", '"+ pdata + "', '"+CEMP+"', "+ CONDICAO_PAGAMENTO + ", "+COD_CLIENTE+") ");
+            string x = " SELECT PAVI, CLIENTE FROM SP_LISTA_PRECO (" + PRODUTO
+                + ", '" + pdata + "', '" + CEMP + "', " + CONDICAO_PAGAMENTO + ", " + COD_CLIENTE + ") ";            
+
+            List<dynamic> MyList = sql.CollectionFromSql(x,
+                new Dictionary<string, object> {}).ToList();
+
+            foreach(dynamic item in MyList)
+            {
+                PAVI = item.PAVI;
+                if (item.CLIENTE == "S")
+                {
+                    PAVI = item.PAVI;
+                    break;
+                }
+            }
+
+            return PAVI;
         }
 
 

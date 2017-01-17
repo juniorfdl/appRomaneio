@@ -16,7 +16,6 @@ var App;
 
             function CrudRomaneioService($q, api, $rootScope) {
                 _super.apply(this, arguments);
-                this.$rootScope = $rootScope;
                 this.apiCondPagamento = api('Cad_Cond_Pagamento');
                 this.apiOperacaoSaida = api('Fat_Operacao_Saida');
 
@@ -25,6 +24,7 @@ var App;
                 this.OperacaoSaidaLook = OperacaoSaidaLook;
                 this.ProdutosLook = ProdutosLook;
                 this.TransportadoraLook = TransportadoraLook;
+                this.GetPreco = GetPreco;
             }            
             
             Object.defineProperty(CrudRomaneioService.prototype, "filtrosBase", {
@@ -62,7 +62,7 @@ var App;
                 enumerable: true,
                 configurable: true
             });
-
+            
             function ClientesLook(fantasia) {                
                 var param = { FANTASIA: fantasia };
                 return this.api.allLook(param, 'cad_colaborador/ClientesLook');
@@ -89,6 +89,17 @@ var App;
                 var params = { CEMP: this.$rootScope.currentUser.userCEMP, TCLI: 'T' };
                 return this.api.allLook(params, 'cad_colaborador/Tipo');
             }
+
+            function GetPreco(PRODUTO, DATA, CEMP, CONDICAO_PAGAMENTO, COD_CLIENTE) {
+                var param = {
+                      PRODUTO: PRODUTO, DATA: DATA, CEMP: CEMP,
+                      CONDICAO_PAGAMENTO: CONDICAO_PAGAMENTO, COD_CLIENTE: COD_CLIENTE
+                };
+
+                return this.api.allLook(param, 'fat_romaneio_pao/GetPreco');
+            }
+
+
            return CrudRomaneioService;
         })(Services.CrudBaseService);
         Services.CrudRomaneioService = CrudRomaneioService;

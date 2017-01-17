@@ -40,7 +40,7 @@ var App;
              * Método de suporte do AngularJS. Não invocar diretamente.
              */
             /* @ngInject */
-            ApiProvider.prototype.$get = function ($http, $q, TratarErroDaApi, intercept, toaster) {                
+            ApiProvider.prototype.$get = function ($http, $q, TratarErroDaApi, intercept, toaster) {
                 var _this = this;
                 return function (api) {
                     return new ApiService(_this.baseUrl + '/' + api, $http, $q, TratarErroDaApi, intercept, toaster);
@@ -57,7 +57,7 @@ var App;
              * @private
              */
             function ApiService(api, $http, $q, TratarErroDaApi, intercept, toaster) {
-                
+
                 this.api = api;
                 this.$http = $http;
                 this.$q = $q;
@@ -97,8 +97,7 @@ var App;
             };
 
             ApiService.prototype.allLook = function (params, look) {
-                debugger;
-                return this.fetch(this.apibase +'/'+ look, params);
+                return this.fetch(this.apibase + '/' + look, params);
             };
             /**
              * Obtem um registro através do seu identificador.
@@ -113,9 +112,7 @@ var App;
              * @returns     Promise para o registro retornado.
              */
             ApiService.prototype.get = function (id) {
-                return this.$http.get(this.api + '/' + id).then(function (response)
-                {
-                    debugger;
+                return this.$http.get(this.api + '/' + id).then(function (response) {
                     return response.data;
                 });
             };
@@ -168,7 +165,6 @@ var App;
              * @returns         Promise para o registro atualizado.
              */
             ApiService.prototype.save = function (entity) {
-                //debugger;
                 var _this = this;
                 var url = this.api + (entity.id ? '/' + entity.id : '');
                 var method = entity.id ? 'PUT' : 'POST';
@@ -182,7 +178,6 @@ var App;
                     url: url,
                     data: entity
                 }).then(function (response) {
-                    debugger;
                     var payload = (response.data || {});
                     payload.$status = response.status;
 
@@ -191,9 +186,9 @@ var App;
                     } else {
                         _this.toaster.success("Atenção", "Operação executada com sucesso!");
 
-                      return angular.extend(entity, payload);
+                        return angular.extend(entity, payload);
                     }
-                    
+
                 }).catch(function (data) {
                     return _this.$q.reject(_this.TratarErroDaApi(data));
                 });
@@ -240,15 +235,15 @@ var App;
              * @param id    Identificar do registro, conforme indicado por [[ApiEntity.id]].
              */
             ApiService.prototype.delete = function (id) {
-                debugger;
                 var _this = this;
-                return this.$http.delete(this.api + '/' + id)
-                    .catch(function (data) { return _this.$q.reject(_this.TratarErroDaApi(data)); })
-                    .then(function (response) { return response.data; });
+                return this.$http.delete(this.api + '/' + id).then(function (response) {
+                    return response;                   
+                })
+                .catch(function (data) { return _this.$q.reject(_this.TratarErroDaApi(data)); });
             };
             return ApiService;
         })();
-        
+
         Services.ApiService = ApiService;
         App.modules.Services.provider('api', ApiProvider);
         App.modules.Services.config(function ($httpProvider, apiProvider) {

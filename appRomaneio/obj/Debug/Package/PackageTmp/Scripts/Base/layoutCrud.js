@@ -37,8 +37,8 @@ var App;
                     var crudId = crudCtrl.crud.crud();
                     crudCtrl.podeVisualizar = true;//PermissoesService.temPermissao(crudId, 'visualizar');
                     crudCtrl.podeIncluir = true; //PermissoesService.temPermissao(crudId, 'incluir');
-                    crudCtrl.podeEditar = true; //PermissoesService.temPermissao(crudId, 'editar');
-                    crudCtrl.podeSalvar = true; //PermissoesService.temPermissao(crudId, 'incluir', 'editar') && crudCtrl.crud.overridePodeEditar() !== false;
+                    crudCtrl.podeEditar = true;//PermissoesService.temPermissao(crudId, 'editar');
+                    crudCtrl.podeSalvar = crudCtrl.crud.overridePodeEditar() !== false;
                     crudCtrl.podeExcluir = true; //PermissoesService.temPermissao(crudId, 'excluir') && crudCtrl.crud.overridePodeExcluir() !== false;
                     crudCtrl.crud.permissoes = crudCtrl;
 
@@ -54,7 +54,6 @@ var App;
                     }
 
                     crudCtrl.edit = function (item) {
-                        debugger;
                         this.crud.$rootScope.Cadastro = !this.crud.$rootScope.Cadastro;
                         this.crud.descricao = 'Alterar';                         
                         var _crud = this.crud;
@@ -210,7 +209,6 @@ var App;
                     scope['listCtrl'] = ctrls[0];
                     scope['ctrl'] = ctrls[1].crud;
                     scope['clicked'] = function (item, $event) {
-                        debugger;
                         var ctrl = scope['ctrl'];
                         ctrl.$rootScope.Cadastro = !ctrl.$rootScope.Cadastro;
                         ctrl.descricao = 'Alterar';
@@ -237,18 +235,11 @@ var App;
                 controller: function () {
                     var _this = this;
                     this.submit = function () {
-                        debugger;
                         _this.listCtrl.buscar(_this.listCtrl.termoDigitado, _this.listCtrl.campoSelecionado);
                     };
 
-                    //this.edit = function () {
-                    //    debugger;
-                    //    _this.listCtrl.$rootScope.Cadastro = !_this.listCtrl.$rootScope.Cadastro;
-                    //    _this.crudCtrl.crud.descricao = 'Alterar'; 
-                    //};
-
+                    
                     this.novo = function () {
-                        debugger;
                         _this.listCtrl.$rootScope.Cadastro = !_this.listCtrl.$rootScope.Cadastro;
                         _this.crudCtrl.crud.descricao = 'Novo';
                         _this.crudCtrl.crud.currentRecord = {};
@@ -359,7 +350,6 @@ var App;
                     scope.luarCrudCtrl = luarCrudCtrl;
                     scope.voltar = function ()
                     {
-                        debugger;
                         this.$root.Cadastro = !this.$root.Cadastro;
                     };
                 }

@@ -3,6 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Data.Common;
+    using System.Data.Entity.Infrastructure;
+    using System.Dynamic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -19,15 +22,45 @@
         }
 
         public List<string> ExecSql(string sql)
+        {            
+            return db.Database.SqlQuery<string>(sql).ToList();            
+        }        
+
+        public virtual IEnumerable<dynamic> CollectionFromSql(string Sql, Dictionary<string, object> Parameters)
         {
-            //db.Database.SqlQuery
+            using (var cmd = db.Database.Connection.CreateCommand())
+            {
+                cmd.CommandText = Sql;
+                if (cmd.Connection.State != ConnectionState.Open)
+                    cmd.Connection.Open();
 
-            //FbDataAdapter dados = new FbDataAdapter(sql, db);
-            //DataTable dt = new DataTable();
-            //dados.Fill(dt);
+                foreach (KeyValuePair<string, object> param in Parameters)
+                {
+                    DbParameter dbParameter = cmd.CreateParameter();
+                    dbParameter.ParameterName = param.Key;
+                    dbParameter.Value = param.Value;
+                    cmd.Parameters.Add(dbParameter);
+                }
+                                
+                using (var dataReader = cmd.ExecuteReader())
+                {
 
-            return db.Database.SqlQuery<string>(sql).ToList();
-            
+                    while (dataReader.Read())
+                    {
+                        var dataRow = GetDataRow(dataReader);
+                        yield return dataRow;
+
+                    }
+                }
+            }
+        }
+
+        private static dynamic GetDataRow(DbDataReader dataReader)
+        {
+            var dataRow = new ExpandoObject() as IDictionary<string, object>;
+            for (var fieldCount = 0; fieldCount < dataReader.FieldCount; fieldCount++)
+                dataRow.Add(dataReader.GetName(fieldCount), dataReader[fieldCount]);
+            return dataRow;
         }
 
         public int BuscarPKRegistro(string Generator)
